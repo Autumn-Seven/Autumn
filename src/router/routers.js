@@ -14,6 +14,16 @@ export default [
             hideInMenu: true,
             notCache: true,
         },
+
+    },
+    {
+        path: '/login',
+        name: 'login',
+        meta: {
+            hideInMenu: true,
+            notCache: true,
+        },
+        component: () => import('@/view/login.vue')
     },
     // {
         // path: '/inventory',
