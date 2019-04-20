@@ -2,7 +2,7 @@ import axios from 'axios';
 import AJAX_SOURCE from '@/dim/ajaxSource';
 import utiljs from '@/util/util.js';
 import {CODE_KEY, MESSAGE_KEY, RESULT_KEY, SUCCESS_CODE, FAILD_CODE} from '@/dim/ajaxStruct';
-
+import ajaxIntercept from  './ajaxIntercept.js'
 
 // axios.defaults.withCredentials = true;//让ajax携带cookie
 // axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8';
@@ -33,7 +33,7 @@ const Ajax = {
 			let nTimeout = oOptions.timeout || 30 * 1000;
 			// token。
 			let oStore = _this.$store;
-			let sToken = oOptions.token || (oStore && (oStore.state.nuser.token || oStore.getters.tokenFromCookie));
+			let sToken = oOptions.token  // || (oStore && (oStore.state.nuser.token || oStore.getters.tokenFromCookie));
 
 
 			// 接口源基础地址。
@@ -83,10 +83,10 @@ const Ajax = {
 					timeout: nTimeout
 				});
 
-				_this.$store.commit('setLoadingAnimation', true);
+				// _this.$store.commit('setLoadingAnimation', true);
 				// 调用 axios 实例对应的方法。
 				return oAxios[sAction].call(oAxios, aoArguments[0], aoArguments[1]).then(function (response) {
-					_this.$store.commit('setLoadingAnimation', false);
+					// _this.$store.commit('setLoadingAnimation', false);
 					return response;
 				});
 			};
@@ -96,14 +96,14 @@ const Ajax = {
 			['request', 'get', 'delete', 'head', 'options', 'post', 'put', 'patch'].forEach(sAction => {
 				oAgents[sAction] = function() {
 					let aoArguments = arguments;
-					// if (ajaxIntercept) {
-					// 	// 使用接口拦截器。
-					// 	return ajaxIntercept(_this, function() {
-					// 		return fnAgentDo(sAction, aoArguments);
-					// 	});
-					// } else {
+					if (ajaxIntercept) {
+						// 使用接口拦截器。
+						return ajaxIntercept(_this, function() {
+							return fnAgentDo(sAction, aoArguments);
+						});
+					} else {
 						return fnAgentDo(sAction, aoArguments);
-					// }
+					}
 				};
 			});
 			return oAgents;

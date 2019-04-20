@@ -8,7 +8,7 @@ export const RESULT_KEY = 'result';
 
 
 /** 成功状态码。 */
-export const SUCCESS_CODE = 0;
+export const SUCCESS_CODE = 200;
 /** 失败状态码。 */
 export const FAILD_CODE = -1;
 

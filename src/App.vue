@@ -1,7 +1,8 @@
 <template>
     <div id="app">
-        <!--<img src="./assets/logo.png">-->
-        <router-view/>
+        <transition name="fade" mode="out-in">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 
@@ -24,5 +25,17 @@
         left: 0;
         width: 100%;
         height: 100%;
+        text-align: center;
+        box-sizing: border-box;
+        font-size: 1rem;
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: all .2s ease;
+    }
+    .fade-enter,
+    .fade-leave-active {
+        opacity: 0;
     }
 </style>
