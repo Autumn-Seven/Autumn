@@ -257,6 +257,7 @@
          * 添加多个参数到指定 URL。
          */
         setParams: function(oParams, sUrl = location.href) {
+            console.log(this)
             let _this = this,
                 sUri = sUrl.split('?')[0],
                 oParamData = _this.getParams(sUrl)
@@ -265,7 +266,7 @@
             // 合并。
             Object.assign(oParamData, oParams);
             // 重新转换回来。
-            let sParams = _this.toParams(oParamData);
+            let sParams = _this.objToParams(oParamData);
 
             if (sParams) {
                 return sUri + '?' + sParams;
@@ -441,6 +442,22 @@
         removeCookie: function(sName, oOptions) {
             this.setCookie(sName, null, oOptions);
         },
+
+
+        //存储
+        set(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        },
+        //取出数据
+        get(key) {
+            return JSON.parse(localStorage.getItem(key));
+        },
+
+        // 删除数据
+        remove(key) {
+            localStorage.removeItem(key);
+        }
+
     };
     var dataUtil = {
 

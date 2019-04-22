@@ -7,8 +7,30 @@
 </template>
 
 <script>
+    import util from '@/util/util.js'
+
     export default {
-        name: 'App'
+        name: 'App',
+        mounted:function() {
+            this.recovery();
+        },
+        methods: {
+            recovery(){
+                let user = util.get('user');
+                let role = this.$store.state.user.role;
+
+                console.log(role);
+
+                if(role !== ''){
+                    return;
+                }else if(user){
+                    this.$store.commit('setUser', user );
+                }else {
+                    this.$router.push('/login');
+                }
+
+            },
+        },
     }
 </script>
 
@@ -28,6 +50,9 @@
         text-align: center;
         box-sizing: border-box;
         font-size: 1rem;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
     }
 
     .fade-enter-active,

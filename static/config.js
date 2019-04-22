@@ -2,7 +2,7 @@
 
 
 let config = {
-	ajaxOnePath: 'http://101.132.122.2:8080',
+	ajaxOnePath: 'http://119.3.36.108:8080',
 };
 
 

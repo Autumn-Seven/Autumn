@@ -1,6 +1,5 @@
 <template>
     <div v-loading="loading2"  element-loading-text="加载中">
-        <div v-wechat-title="$route.meta.title"></div>
        <header class="header-link">
            <ul >
                <li :class="{'active':-1==selected}" @click="changeAll">全部</li>
@@ -25,7 +24,7 @@
     </div>
 </template>
 <script>
-import api from '@/api/fronted'
+
 export default {
     data(){
         return{
@@ -62,9 +61,9 @@ export default {
             this.page = 1;
             this.list = [];
             if(item.id =='-1'){
-                this.$store.dispatch('changeHeadLine','文章')
+
             }else{
-                this.$store.dispatch('changeHeadLine',item.class_name)
+
             }
           this.__getArticleList(this.tagId,this.page);
         },

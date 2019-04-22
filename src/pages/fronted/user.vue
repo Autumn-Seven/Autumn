@@ -1,18 +1,36 @@
+<style lang="less">
+    .user-top{
+        height: 100%;
+        margin: auto;
+        max-width: 900px;
+        display: flex;
+        align-items: flex-end;
+        .user-wrap{
+            width: 100%;
+            margin-bottom: 5px;
+            /*position: absolute;*/
+            /*bottom: 0;*/
+            /*left: 50%;*/
+            /*transform: translate(-50%, 0);*/
+        }
+    }
+</style>
 <template>
-    <div>
+<div class="user-top">
+    <div class="user-wrap">
         <el-button type="text" @click="addRow">新增</el-button>
 
         <el-table
                 :data="tableData"
                 style="width: 100%;background-color: rgba(0,0,0,0)"
-               >
+        >
             <el-table-column
                     type="index"
                     width="50">
             </el-table-column>
             <!--<el-table-column-->
-                    <!--prop="id"-->
-                    <!--label="id">-->
+            <!--prop="id"-->
+            <!--label="id">-->
             <!--</el-table-column>-->
             <el-table-column
                     prop="name"
@@ -36,11 +54,14 @@
             </el-table-column>
             <el-table-column
                     prop="role"
-                    label="角色">
+                    label="角色"
+                    :formatter="formatterRole">
+
             </el-table-column>
             <el-table-column
                     label="操作"
-                    width="120">
+                    width="120"
+                    v-permission="[0,1]">
                 <template slot-scope="scope">
                     <el-button
                             @click.native.prevent="updateRow(scope.$index, scope.row)"
@@ -65,7 +86,7 @@
 
 
         <el-dialog title="新增用户" :visible.sync="dialogFormVisible" width="600px">
-            <el-form :model="form" :rules="rules"  ref="ruleForm" label-width="100px" >
+            <el-form :model="form" :rules="rules"  ref="ruleForm" label-width="100px" size="mini" >
                 <el-form-item label="姓名:"  prop="name">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
@@ -105,6 +126,7 @@
             </div>
         </el-dialog>
     </div>
+</div>
 
 </template>
 
@@ -149,7 +171,6 @@
                         {  required: true, message: '请选择', trigger: 'change' }
                     ],
                 },
-                formLabelWidth: '100px'
             }
         },
         computed:{
@@ -249,11 +270,22 @@
             },
 
             pageChange(index){
-
                 this.page.pageNum = index;
-                console.log(index)
-                console.log(this.page)
                 this.getTableList();
+            },
+            formatterRole(row, column, cellValue, index){
+               if(row.role === 0){
+                   return '超级管理员';
+               }else if(row.role === 1){
+                   return '平台工作人员';
+               }else if(row.role === 2){
+                   return '爱心人士';
+               }else if(row.role === 3){
+                   return '受资助人';
+               }else {
+                   return ''
+               }
+
             },
         },
     }

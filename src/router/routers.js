@@ -52,7 +52,7 @@ export default [
     {
         path: '/',
         meta: {auth: false},
-        redirect: '/home',
+        redirect: '/login',
         component: () => import('@/pages/fronted/mian/mian.vue'),
         hidden: true,
         children: [

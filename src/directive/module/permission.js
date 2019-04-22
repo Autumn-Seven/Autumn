@@ -3,7 +3,9 @@ import store from '@/store'
 export default {
 	inserted(el, binding, vnode) {
 		const permissionRole = binding.value
-		const hasPermission = checkPermission(permissionRole)
+        // console.log(permissionRole)
+
+		const hasPermission = checkPermission(permissionRole);
 		if (!hasPermission) {
 			el.parentNode && el.parentNode.removeChild(el)
 		}
@@ -11,15 +13,12 @@ export default {
 }
 
 export function checkPermission(permissionRole) {
-	let currentRole = (store.state.user && store.state.user.role) || 'visitor'
-	if (typeof currentRole === 'string') {
-		currentRole = [currentRole]
-	}
+	let currentRole = (store.state.user && store.state.user.role);
+
+    // console.log(currentRole);
+
 	if (permissionRole && Array.isArray(permissionRole)) {
-		const hasPermission = currentRole.some(role => {
-			return permissionRole.includes(role)
-		})
-		return hasPermission
+		return permissionRole.indexOf(currentRole) > -1;
 	} else {
 		throw new Error(`Error! Please Enter Array Type"`)
 	}

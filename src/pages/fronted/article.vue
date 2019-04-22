@@ -1,6 +1,5 @@
 <template>
     <div v-loading="loading2"  element-loading-text="加载中">
-        <div v-wechat-title="$route.meta.title"></div>
        <h1>{{article.title}}</h1>
        <p class="type">  
            <i class="el-icon-time"></i><span>{{ article.create_time}}</span>
@@ -12,7 +11,7 @@
     </div>
 </template>
 <script>
-import api from '@/api/fronted'
+
 import marked from 'marked'
 import hlj from 'highlight.js'
 import  'highlight.js/styles/atom-one-dark.css'
@@ -48,7 +47,7 @@ export default {
   },
     mounted(){
         this.__init();
-        this.$store.dispatch('changeHeadLine','文章')
+
     }
 }
 </script>

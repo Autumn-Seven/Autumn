@@ -3,9 +3,9 @@
         <!--<div v-wechat-title="$route.meta.title"></div>-->
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm" label-width="80px"
                  element-loading-text="页面跳转中">
-            <h3 class="title">后台登录</h3>
-            <el-form-item label="用户名" prop="name">
-                <el-input v-model="ruleForm.name"></el-input>
+            <h3 class="title">用户登录</h3>
+            <el-form-item label="用户名" prop="username">
+                <el-input v-model="ruleForm.username"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password">
                 <el-input type="password" v-model="ruleForm.password"></el-input>
@@ -18,19 +18,22 @@
 </template>
 
 <script>
-    import api from '@/api/backend'
+
+
+    import {AJAX_WATER} from '@/dim/ajaxSource.js'
     import common from '@/components/common/common'
+    import util from '@/util/util.js'
     export default {
         data() {
             return {
                 dialogVisible: false,
                 loading: false,
                 ruleForm: {
-                    name: '',
-                    password: ''
+                    username: 'test',
+                    password: '123456'
                 },
                 rules: {
-                    name: [
+                    username: [
                         {required: true, message: '请输入用户名', trigger: 'blur'},
                     ],
                     password: [
@@ -41,22 +44,30 @@
         },
         methods: {
             submitForm(formName) {
-                let _this = this;
-
+                let self =this;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        _this.loading = true
-                        let username = this.ruleForm.name,
-                            password = this.ruleForm.password;
-                        let data = {username: username, password: password}
-                        this.$store.dispatch('userLogin', data);
-                        this.loading = false;
+                        self.login();
                     } else {
-                        this.loading = false;
-                        this.$Message.error('表单验证失败!');
+                        this.$message({
+                            type:'error',
+                            message:'表单验证失败',
+                        });
                         return false;
                     }
                 });
+            },
+
+            login(){
+                let self = this;
+                this.$ajax(AJAX_WATER).post('user/login', this.ruleForm).then(({r}) => {
+//                    console.log(r)
+
+                    self.$store.commit('setUser', r);
+                    util.set('user', r);
+                    self.$router.push('/home');
+
+                })
             },
         },
     }
