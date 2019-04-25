@@ -5,7 +5,7 @@
  * @version 1.0
  */
 
-
+let global = this || {};
 
 ((function(global) {
     var _util = global._util || {};
@@ -1116,6 +1116,35 @@
         oneOf(value, arr) {
             return arr.indexOf(value) > -1;
         },
+
+        randomItem(arr, percentArry = []) {
+
+            var arr2 = this.clone(percentArry);
+
+            if(arr2.length === 0){
+                arr2 = arr.map(()=>1)
+            }
+
+            while(arr2.length < arr.length){
+                arr2.push(0);
+            }
+
+            let sum = 0;
+            let last = 0;
+            arr2.forEach(function(v) {
+                sum = sum + (v ? v : 0);
+            });
+
+            for (var i = 0; i < arr.length; i++) {
+                sum = sum- last;
+                var random = Math.random();
+                if (random <= (arr2[i] || 0) / sum) {
+                    return arr[i];
+                }
+                last = arr2[i] || 0;
+            }
+        }
+
     };
     var gidUtil = {
 
@@ -1317,9 +1346,9 @@
     if (typeof define === 'function') define(function() { return Utils; });
     if (global) global._util = Utils;
 
-}))(this);
+}))(global);
 
-export default this._util;
+export default global._util;
 
 
 
