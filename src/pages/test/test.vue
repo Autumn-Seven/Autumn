@@ -36,6 +36,20 @@
                     console.log(error);
                 });
 
+                
+
+                axios({
+                    method: 'GET',
+                    url: '/WebServices/WeatherWebService.asmx/getSupportDataSet',
+                    data: {}
+                })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
 
 //                let self = this;
 //                this.$ajax().post( '/WebServices/WeatherWebService.asmx/getSupportDataSet', {

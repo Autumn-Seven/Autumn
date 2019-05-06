@@ -15,7 +15,12 @@ module.exports = {
             target:'https://apis.map.qq.com',
             changeOrigin:true,
             secure: false,
-        }
+        },
+        '/WebServices':{
+            target:'http://www.webxml.com.cn',
+            changeOrigin:true,
+            secure: false,
+        },
     },
 
     // Various Dev Server settings
