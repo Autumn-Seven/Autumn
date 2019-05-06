@@ -21,6 +21,11 @@ module.exports = {
             changeOrigin:true,
             secure: false,
         },
+        '/HelloWorld':{
+            target:'http://192.168.88.248:9000',
+            changeOrigin:true,
+            secure: false,
+        },
     },
 
     // Various Dev Server settings
