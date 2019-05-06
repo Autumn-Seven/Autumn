@@ -10,11 +10,11 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-        '/WebServices':{
-            target:'http://www.webxml.com.cn',
-            // secure:false,
-            changeOrgin:true,
+    proxyTable:{
+        '/ws':{
+            target:'https://apis.map.qq.com',
+            changeOrigin:true,
+            secure: false,
         }
     },
 

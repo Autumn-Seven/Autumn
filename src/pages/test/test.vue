@@ -25,12 +25,9 @@
 
 
                 axios({
-                    method: 'post',
-                    url: 'WebServices/WeatherWebService.asmx/getSupportDataSet',
-                    data: {
-                        firstName: 'Fred',
-                        lastName: 'Flintstone'
-                    }
+                    method: 'GET',
+                    url: '/ws/place/v1/search?keyword=%E9%85%92%E5%BA%97&boundary=nearby(39.908491,116.374328,1000)&key=RPNBZ-3EYK3-ZOA3O-3WTNP-6XTLZ-ZDF22',
+                    data: {}
                 })
                 .then(function (response) {
                     console.log(response);
@@ -38,6 +35,7 @@
                 .catch(function (error) {
                     console.log(error);
                 });
+
 
 //                let self = this;
 //                this.$ajax().post( '/WebServices/WeatherWebService.asmx/getSupportDataSet', {
