@@ -459,7 +459,7 @@ let global = this || {};
         }
 
     };
-    var dataUtil = {
+    var dateUtil = {
 
         /**
          * 将字符串时间转换成时间对象。
@@ -489,15 +489,15 @@ let global = this || {};
             ;
 
             // 检测参数类型。
-            if (sDateType == 'Date') {
+            if (sDateType === 'date') {
                 // 日期对象型。
 
                 dDate = sDateTime;
-            } else if (sDateType == 'Number') {
+            } else if (sDateType === 'number') {
                 // 毫秒值类型。
 
                 dDate = new Date(Number(sDateTime));
-            } else if (sDateType == 'String') {
+            } else if (sDateType === 'string') {
                 // 字数串类型。
                 sDateTime = sDateTime.replace(/-/g, '/');
                 // 首先使用标准日期格式来实例化。
@@ -597,7 +597,7 @@ let global = this || {};
 
         /**
          * 格式化日期时间。
-         * 如 yyyy-MM-dd、yyyy-MM-dd hh:mm:ss
+         * 如 yyyy-MM-dd、yyyy-MM-dd hh:mm:ss W
          *
          * @param {String|Date|Number} dDate 要格式化的日期对象。
          * @param {String} sTemplate 要模式化的模板。
@@ -609,10 +609,11 @@ let global = this || {};
          *  s 秒
          *  S 毫秒
          *  q 季
-         *  w 周
+         *  w  第多少周
+         *  W  星期几
          * @return {String}
          */
-        formatDate: function(dDate, sTemplate = 'yyyy-MM-dd hh:mm:ss') {
+        formatDate: function (dDate, sTemplate = 'yyyy-MM-dd hh:mm:ss') {
             var _this = this;
 
             // 先解析一下日期参数。
@@ -622,6 +623,7 @@ let global = this || {};
             if (!dDate) {
                 return '';
             }
+
 
             var
                 nFullYear = dDate.getFullYear(),	// 四位整年。
@@ -636,9 +638,12 @@ let global = this || {};
                 nMilliseconds = dDate.getMilliseconds(),	// 毫秒。
                 nQuarter = Math.floor((nMonth + 3) / 3),	// 季。
                 nWeek = _iso8601Week(dDate), // 周
+                nWeekDay = getWeekDay(dDate), // 星期几
 
                 fix = _this.fix
             ;
+
+
 
             var oFullFlags = {
                 yyyy: nFullYear,	// 年。
@@ -650,7 +655,9 @@ let global = this || {};
                 S: nMilliseconds,	// 毫秒。
                 q: nQuarter,	// 季。
                 w: nWeek,
+                W: nWeekDay    //星期几
             };
+
 
             var oFlags = {
                 yy: nYear,	// 年。
@@ -660,6 +667,7 @@ let global = this || {};
                 m: nMinutes,	// 分。
                 s: nSeconds	// 秒。
             };
+
 
             // 逐一替换各属性。
             var sDate = sTemplate;
@@ -675,7 +683,9 @@ let global = this || {};
                 sDate = sDate.replace(p, oFlags[p]);
             }
 
+
             return sDate;
+
 
             /**
              * 计算当前日期为当年的第几周
@@ -687,14 +697,50 @@ let global = this || {};
                 var time, checkDate = new Date(date.getTime());
 
                 // Find Thursday of this week starting on Monday
-                checkDate.setDate(
-                    checkDate.getDate() + 4 - (checkDate.getDay() || 7));
+                checkDate.setDate(checkDate.getDate() + 4 - (checkDate.getDay() || 7));
 
                 time = checkDate.getTime();
                 checkDate.setMonth(0); // Compare with Jan 1
                 checkDate.setDate(1);
-                return Math.floor(
-                        Math.round((time - checkDate) / 86400000) / 7) + 1;
+                return Math.floor(Math.round((time - checkDate) / 86400000) / 7) + 1;
+            }
+
+
+            /**
+             * 计算当前日期为当年的第几周
+             *
+             * @param {Date} date
+             * @return {Number}
+             */
+            function getWeekDay(date) {
+                var time = new Date(date.getTime());
+
+                var day = time.getDay();
+                var str = '星期';
+                switch (day) {
+                    case 0 :
+                        str += "日";
+                        break;
+                    case 1 :
+                        str += "一";
+                        break;
+                    case 2 :
+                        str += "二";
+                        break;
+                    case 3 :
+                        str += "三";
+                        break;
+                    case 4 :
+                        str += "四";
+                        break;
+                    case 5 :
+                        str += "五";
+                        break;
+                    case 6 :
+                        str += "六";
+                        break;
+                }
+                return  str;
             }
         },
 
@@ -1117,6 +1163,13 @@ let global = this || {};
             return arr.indexOf(value) > -1;
         },
 
+        /***
+         * 从数组中随机取值，
+         * arr, 目标数组，  传入数字，随机返回一个item （默认，每个item的概率一致）
+         * percentArry， 权重数组，调整数组中的元素的概率
+         *
+         * 如（[red, green, blue, yellow],  [1, 3, 5]）   那么概率为   red  1/9  ， green 3/9 ， blue 5/9 ，  yellow 0
+         * */
         randomItem(arr, percentArry = []) {
 
             var arr2 = this.clone(percentArry);
@@ -1143,6 +1196,44 @@ let global = this || {};
                 }
                 last = arr2[i] || 0;
             }
+        },
+
+        /***
+         * 数组将维度，  例如 [1,[2,3]]   变为 [1,2,3]
+         *
+         *
+         */
+        flatten(arr,ret){
+            ret = ret || [];
+            if(!this.isArray(arr)) return ret;
+
+            var i = 0,length = arr.length,item;
+            while( i < length ){
+                item = arr[i++];
+
+                if(this.isArray(item)){ // 这样判断会更好
+                    this.flatten(item,ret);
+                }else{
+                    ret.push(item);
+                }
+            }
+            return ret;
+        },
+
+        /***
+         * 数组乱序， 重新洗牌算法。
+         * */
+        shuffle (arr) {
+
+            var len = arr.length,
+                i,temp;
+            while(len){
+                i = Math.floor(Math.random() * len--);
+                temp = arr[i];
+                arr[i] = arr[len];
+                arr[len] = temp;
+            }
+            return arr;
         }
 
     };
@@ -1333,14 +1424,48 @@ let global = this || {};
         },
     };
 
+    const u = navigator.userAgent;
+    var browserUtil ={
+        version: {
+            trident: u.indexOf('Trident') > -1, // IE内核
+            presto: u.indexOf('Presto') > -1, // opera内核
+            webKit: u.indexOf('AppleWebKit') > -1, // 苹果、谷歌内核
+            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') === -1, // 火狐内核
+            mobile: !!u.match(/AppleWebKit.*Mobile.*/), // 是否为移动终端
+            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), // ios终端
+            android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, // android终端
+            iPhone: u.indexOf('iPhone') > -1, // 是否为iPhone或者QQHD浏览器
+            iPad: u.indexOf('iPad') > -1, // 是否iPad
+            webApp: u.indexOf('Safari') === -1, // 是否web应该程序，没有头部与底部
+            weixin: u.indexOf('MicroMessenger') > -1, // 是否微信 （2015-01-22新增）
+            qq: u.match(/\sQQ/i) === ' qq', // 是否QQ
+            iPhoneX: (function () {
+                const iOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+                const ratio = window.devicePixelRatio || 1
+                const screen = {
+                    width: window.screen.width * ratio,
+                    height: window.screen.height * ratio
+                }
+                let result = false
+                if (iOS && screen.width === 1125 && screen.height === 2436) {
+                    result = true
+                }
+                return result
+            })()
+        },
+        language: (navigator.browserLanguage || navigator.language).toLowerCase(),
+        userAgent: u
+    };
+
     Utils.extend(Utils, paramUtil);
     Utils.extend(Utils, cookieUtil);
-    Utils.extend(Utils, dataUtil);
+    Utils.extend(Utils, dateUtil);
     Utils.extend(Utils, numberUtil);
     Utils.extend(Utils, stringUtil);
     Utils.extend(Utils, arrayUtil);
     Utils.extend(Utils, gidUtil);
     Utils.extend(Utils, colorUtil);
+    Utils.extend(Utils, browserUtil);
 
     if (typeof module !== 'undefined' && module.exports) module.exports = Utils;
     if (typeof define === 'function') define(function() { return Utils; });

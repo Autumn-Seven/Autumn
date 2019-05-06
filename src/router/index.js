@@ -6,13 +6,13 @@ Vue.use(Router)
 
 const router  = new Router({
   routes: routes
-})
+});
 
 
 Vue.use(Router);
 
 router.beforeEach((to, from, next) => {
 	next();
-})
+});
 
 export default router;

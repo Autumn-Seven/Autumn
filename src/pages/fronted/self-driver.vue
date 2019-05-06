@@ -49,7 +49,7 @@
                             <!--<el-checkbox v-model="checked">{{item.followerName}}</el-checkbox>-->
                             <!--</div>-->
                             <span>选择同行的人：</span>
-                            <el-checkbox v-for="item in props.row.partnerList" :label="item.follower"
+                            <el-checkbox v-for="item,index in props.row.partnerList" :label="item.follower" :key="index"
                                          @change="chooseFollower(item.follower, props.row.id, $event)">
                                 {{item.followerName}}
 
