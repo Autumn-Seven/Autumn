@@ -10,6 +10,8 @@
     import common from '@/components/common/common'
     import util from 'tool/util.js';
 
+    import X2JS from 'x2js';
+
     import axios from 'axios';
 
     export default {
@@ -24,31 +26,98 @@
             login(){
 
 
+//                axios({
+//                    method: 'GET',
+//                    url: '/ws/place/v1/search?keyword=%E9%85%92%E5%BA%97&boundary=nearby(39.908491,116.374328,1000)&key=RPNBZ-3EYK3-ZOA3O-3WTNP-6XTLZ-ZDF22',
+//                    data: {}
+//                })
+//                .then(function (response) {
+//                    console.log(response);
+//                })
+//                .catch(function (error) {
+//                    console.log(error);
+//                });
+
                 axios({
                     method: 'GET',
-                    url: '/ws/place/v1/search?keyword=%E9%85%92%E5%BA%97&boundary=nearby(39.908491,116.374328,1000)&key=RPNBZ-3EYK3-ZOA3O-3WTNP-6XTLZ-ZDF22',
+                    url: '/WebServices/WeatherWebService.asmx/getSupportCity?byProvinceName=浙江',
                     data: {}
                 })
                 .then(function (response) {
-                    console.log(response);
+                    var x2js = new X2JS();
+                    console.log(x2js);
+                    console.log(response.data);
+                    var jsonObj = x2js.xml2js( response.data );
+                    var jsonObj2 = x2js.xml2dom( response.data );
+
+                    console.log(jsonObj);
+                    console.log(jsonObj2);
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
 
-                
+
+
+
+
+
+
+
+                let xmls='<?xml version="1.0" encoding="utf-8"?>\
+                    <ArrayOfString xmlns="http://WebXml.com.cn/">\
+                    <string>浙江</string>\
+                    </ArrayOfString>';
+
+//                let xmls='<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"\
+//                            xmlns:web="http://www.webserviceX.NET/">\
+//            <soapenv:Header/>\
+//            <soapenv:Body>\
+//              <web:ConversionRate>\
+//                <web:FromCurrency>INR</web:FromCurrency>\
+//                <web:ToCurrency>USD</web:ToCurrency>\
+//              </web:ConversionRate>\
+//            </soapenv:Body>\
+//          </soapenv:Envelope>';
+
 
                 axios({
-                    method: 'GET',
-                    url: '/WebServices/WeatherWebService.asmx/getSupportDataSet',
-                    data: {}
-                })
-                .then(function (response) {
+                    method: 'POST',
+                    url: '/WebServices/WeatherWebService.asmx/getSupportCity',
+                    data:"byProvinceName=浙江",
+                    headers:{
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(function (response) {
+                    var x2js = new X2JS();
+                    console.log(x2js);
                     console.log(response);
+                    var jsonObj = x2js.xml2js( response);
+                    var jsonObj2 = x2js.xml2dom( response.data );
+
+                    console.log(jsonObj);
+                    console.log(jsonObj2);
                 })
-                .catch(function (error) {
-                    console.log(error);
-                });
+
+//
+//                axios.post('/WebServices/WeatherWebService.asmx/getSupportCity',
+//                    {
+//                        byProvinceName:'浙江'
+//                    },
+//
+//                    {
+//                        headers:{
+//                            'Content-Type': 'application/x-www-form-urlencoded'
+//                        }
+//                    }
+//                 )
+//                .then(res=>{
+//                    console.log(res);
+//                }).catch(err=>{console.log(err)});
+
+
+
+
 
 
 //                let self = this;
