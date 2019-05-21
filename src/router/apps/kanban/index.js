@@ -1,5 +1,5 @@
 /**
- * Created by Seven on 2019/5/5.
+ * Created by Seven on 2019/5/21.
  * project: Autumn
  * email: fighting20xx@126.com
  */
@@ -44,6 +44,4 @@ export default [
     //         },
     //     ],
     // },
-
-
 ];

@@ -155,6 +155,10 @@ let global = this || {};
             return tempObj;
         },
 
+
+        /**
+         *  extend扩展，  直接给予目标对象某种属性
+         * */
         extend(target, source) {
             for (var key in source) {
                 if (source.hasOwnProperty(key)) {
@@ -163,6 +167,79 @@ let global = this || {};
             }
             return target;
         },
+
+
+
+
+        /**
+         * 对象扩展（默认深拷贝）。
+         *
+         * @return {Object}
+         */
+        extends() {
+            var options, name, src, copy, copyIsArray, clone,
+                target = arguments[0] || {},
+                i = 1,
+                length = arguments.length,
+                deep = true
+            ;
+
+            //如果第一个值为bool值，那么就将第二个参数作为目标参数，同时目标参数从2开始计数
+            if ( typeof target === 'boolean' ) {
+                deep = target;
+                target = arguments[1] || {};
+                // skip the boolean and the target
+                i = 2;
+            }
+            // 当目标参数不是object 或者不是函数的时候，设置成object类型的
+            if ( typeof target !== 'object' && !this.typeOf(target) === 'Function' ) {
+                target = {};
+            }
+            //如果extend只有一个函数的时候，那么将跳出后面的操作
+            if ( length === i ) {
+                target = this;
+                --i;
+            }
+            for ( ; i < length; i++ ) {
+                // 仅处理不是 null/undefined values
+                if ( (options = arguments[ i ]) !== null ) {
+                    // 扩展options对象
+                    for ( name in options ) {
+                        src = target[ name ];
+                        copy = options[ name ];
+                        // 如果目标对象和要拷贝的对象是恒相等的话，那就执行下一个循环。
+                        if ( target === copy ) {
+                            continue;
+                        }
+                        // 如果我们拷贝的对象是一个对象或者数组的话
+                        if ( deep && copy && ( this.isPlainObject(copy) || (copyIsArray = this.typeOf(copy) === 'Array') ) ) {
+                            if ( copyIsArray ) {
+                                copyIsArray = false;
+                                clone = src && this.typeOf(src) === 'Array' ? src : [];
+                            } else {
+                                clone = src && this.isPlainObject(src) ? src : {};
+                            }
+
+                            //不删除目标对象，将目标对象和原对象重新拷贝一份出来。
+                            target[ name ] = this.extends( deep, clone, copy );
+                            // 如果options[name]的不为空，那么将拷贝到目标对象上去。
+                        } else if ( copy !== undefined ) {
+                            target[ name ] = copy;
+                        }
+                    }
+                }
+            }
+
+            // 返回修改的目标对象
+            return target;
+        },
+
+
+
+        /**
+         * 智能clone 纯粹对象 或者数组， 不能clone 函数，    遇到函数之类的就要用上面的extends了
+         *
+         * */
 
         clone (obj) {
             return JSON.parse(JSON.stringify(obj));

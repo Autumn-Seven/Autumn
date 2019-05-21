@@ -2,11 +2,13 @@
 
 import admins from './apps/admin/index.js'
 import blog from './apps/blog/index.js'
+import kanban from './apps/kanban/index.js'
 
 
 export default [
     ...admins,
     ...blog,
+    ...kanban,
     {
         path: '/',
         meta: {auth: false},
@@ -15,8 +17,13 @@ export default [
 
    {
        path: '/test',
-       component: () => import('@/pages/test/test.vue'),
+       component: () => import('@/pages/common/test.vue'),
        meta: {auth: false, title: '测试页'},
+    },
+    {
+       path: '/nav',
+       component: () => import('@/pages/common/nav.vue'),
+       meta: {auth: false, title: '导航页面'},
     },
 
 
@@ -27,7 +34,7 @@ export default [
         path: '/login',
         meta: {auth: false, title: '登录'},
         hidden: true,
-        component:  () => import('@/pages/fronted/login'),
+        component:  () => import('@/pages/common/login.vue'),
     },
     {
         path: '*',
