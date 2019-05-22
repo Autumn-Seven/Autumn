@@ -12,7 +12,7 @@ export default [
     {
         path: '/',
         meta: {auth: false},
-        redirect: '/login',
+        redirect: '/nav',
     },
 
    {
@@ -39,7 +39,7 @@ export default [
     {
         path: '*',
         hidden: true,
-        component: () => import('@/pages/error'),
+        component: () => import('@/pages/common/error'),
     },
 
 ];

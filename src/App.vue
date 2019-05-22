@@ -16,18 +16,18 @@
         },
         methods: {
             recovery(){
-                let user = util.get('user');
-                let role = this.$store.state.user.role;
-
-                console.log(role);
-
-                if(role !== ''){
-                    return;
-                }else if(user){
-                    this.$store.commit('setUser', user );
-                }else {
-                    this.$router.push('/login');
-                }
+//                let user = util.get('user');
+//                let role = this.$store.state.user.role;
+//
+//                console.log(role);
+//
+//                if(role !== ''){
+//                    return;
+//                }else if(user){
+//                    this.$store.commit('setUser', user );
+//                }else {
+//                    this.$router.push('/login');
+//                }
 
             },
         },
@@ -47,7 +47,6 @@
         left: 0;
         width: 100%;
         height: 100%;
-        text-align: center;
         box-sizing: border-box;
         font-size: 1rem;
         margin: 0;

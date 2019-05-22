@@ -9,9 +9,7 @@
 export default [
 
     {
-        path: '/',
-        meta: {auth: false},
-        redirect: '/login',
+        path: '/blog/',
         component: () => import('@/pages/blog/mian/mian.vue'),
         hidden: true,
         children: [
