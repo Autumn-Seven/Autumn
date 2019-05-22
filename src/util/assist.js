@@ -65,4 +65,12 @@ export const findComponentsDownward = function(vm, componentName) {
     }, []);
 };
 
+
+export const error = (msg) => {
+    console.error(`[vuescroll] ${msg}`);
+};
+export const warn = (msg) => {
+    console.warn(`[vuescroll] ${msg}`);
+};
+
 export default {};

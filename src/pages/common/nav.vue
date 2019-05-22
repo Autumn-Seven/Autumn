@@ -37,6 +37,7 @@
                         let path = fatherPath+ route.path;
                         if(route.children){
                             let list = [];
+                            self.allRouterList.push(list);
                             find(path, route.children ,list);
                         }else {
                             resultList.push({
@@ -45,10 +46,10 @@
                             })
                         }
                     });
-                    self.allRouterList.push(resultList);
                 }
 
                 let resultList = [];
+                self.allRouterList.push(resultList);
                 find('', routeList,  resultList );
             }
         }
