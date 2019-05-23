@@ -3,12 +3,14 @@
 import admins from './apps/admin/index.js'
 import blog from './apps/blog/index.js'
 import kanban from './apps/kanban/index.js'
+import toolTest from './apps/tool-test/index.js'
 
 
 export default [
     ...admins,
     ...blog,
     ...kanban,
+    ...toolTest,
     {
         path: '/',
         meta: {auth: false},

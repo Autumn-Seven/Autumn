@@ -11,7 +11,6 @@ export default [
     {
         path: '/blog/',
         component: () => import('@/pages/blog/mian/mian.vue'),
-        hidden: true,
         children: [
             {
                 path: 'home',

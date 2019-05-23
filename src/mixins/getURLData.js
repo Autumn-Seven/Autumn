@@ -1,0 +1,52 @@
+/**
+ * Created by Seven on 2019/4/16.
+ * project: wms-client
+ * email: fighting20xx@126.com
+ */
+
+import {AJAX_WMS} from '@/dim/ajaxSource';
+import {CODE_KEY, MESSAGE_KEY, RESULT_KEY, SUCCESS_CODE, FAILD_CODE} from '@/dim/ajaxStruct';
+
+const importMixin = Vue => {
+	/**
+	 * 通用的函数，获取字典的值
+	 *
+	 * }
+	 */
+	Vue.mixin({
+		methods:{
+			/**
+			 * 获取字典类型
+			 *
+			 * */
+			getDictionary:function (type, result) {
+				let self = this;
+				this.$ajax(AJAX_WMS).get('dictionary/items?typeCode='+ type).then(({r}) => {
+					result.push(...r);
+				});
+			},
+
+			/***
+			 * 获取url数据， 主要是针对 获取所有数据的下拉框类型的，
+			 *
+			 * **/
+
+			getURLList:function (url, result, method = 'get',postOption = {}) {
+				let self = this;
+				this.$ajax(AJAX_WMS)[method](url,postOption).then(({r}) => {
+					result.splice(1,result.length);
+
+					if(Array.isArray(r)){
+						result.push(...r);
+					}else if(Array.isArray(r.list)){
+						result.push(...r.list);
+					}
+				});
+			},
+		}
+	});
+
+
+};
+
+export default importMixin
