@@ -68,7 +68,7 @@
             .nav-list{
                 .nav-item{
                     padding: 2px;
-                    width: 150px;
+                    width: 160px;
                 }
             }
         }

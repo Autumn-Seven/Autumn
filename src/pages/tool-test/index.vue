@@ -5,9 +5,9 @@
  */ 
 
 <template>
-  <div>
+  <div class="main-tool-test">
      <div class="test-title"> 模块测试页</div>
-      <router-view class="main-content"></router-view>
+      <router-view></router-view>
   </div>
 </template>
 <script>
@@ -16,6 +16,9 @@
     }
 </script>
 <style>
+    .main-tool-test{
+        height: 100%;
+    }
     .test-title{
         margin: 20px;
         color: lightslategray;
