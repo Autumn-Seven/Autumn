@@ -60,18 +60,14 @@
                 ruleInline:createRules({
                     name: ['required','float_500.23'],
                     profileName: ['required_change'],
-                    gatewayId: ['type_number','required_change'],
+                    gatewayId: ['required_change_number'],
                     description: ['len_128', '<>$&'],
-                    status: [],
                 },{
-                    code: [
-                        {required: true, message: '请输入', trigger: 'blur'},
+                    gatewayId: [
+//                        {required: true, message: '请选择', trigger: 'change',type:'number'},
                     ],
                     name: [
 //                        {required: true, message: '请输入', trigger: 'blur'},
-                    ],
-                    typeId: [
-                        {type:'number',required: true, message: '请选择', trigger: 'change'},
                     ],
                 }),
                 infoData: {},

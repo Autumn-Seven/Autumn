@@ -7,7 +7,10 @@
 
 
 
-/** createRules方法：
+/** createRules方法： 为什么要封装这个方法？  表达验证太多了，每次写一遍太麻烦，
+ *
+ *
+ *
  *      @param {*} customeRules ,  OriginalRules
  *      2个参数，第一个自定的规则，第二个原始的规则，
  *
@@ -48,11 +51,13 @@ export const createRules = (customeRules = {} ,  OriginalRules = {}) => {
     }
 
 
-    //原始的规则写法
+    //原始的规则 添加进去
     for (let key in OriginalRules) {
-        addRule(key, OriginalRules[key]);
+        OriginalRules[key].forEach(function(item) {
+            addRule(key, item);
+        });
     }
-    console.log(rule);
+    // console.log(rule);
     return rule;
 };
 
@@ -174,32 +179,20 @@ var myRules = {
         message: '必选项',
         trigger: 'change',
     },
+    required_change_number: {
+        required: true,
+        message: '必选项',
+        trigger: 'change',
+        type:'number'
+    },
     required_change_arr: {
         required: true,
         message: '不能为空',
         trigger: 'change',
         type: 'array'
     },
-    // // 中英文、数字、下划线、减号
-    // special: {
-    //     pattern: /^[\u4E00-\u9FA5A-Za-z0-9_-]+$/,
-    //     message: '不能输入特殊字符'
-    // },
-    // //英文大小写，数字，英文符号
-    // special1: {
-    //     pattern: /^[A-Za-z0-9\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]$/,
-    //     message: '只能输入一个英文,数字,符号'
-    // },
+    // 中英文、数字、下划线、减号
 
-
-    num_decimal: {
-        pattern: /^((([1-9]\d*)(\.\d*[1-9])?)|(0\.\d*[1-9]))$/,
-        message: '请输入正确的整数或小数'
-    },
-    num_decimal1: {
-        pattern: /^(([-]?([1-9]\d*)(\.\d*[1-9])?)|([-]?0\.\d*[1-9])|0)$/,
-        message: '请输入正确的整数或小数'
-    },
     num_arr: {
         pattern: /^([1-9]+[,])*([1-9]+)$/,
         message: '只能输入正整数,以","隔开'
@@ -212,5 +205,25 @@ var myRules = {
         pattern: /^((25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))$/,
         message: '只能输入IP地址'
     },
+
+
+
+    // special: {
+    //     pattern: /^[\u4E00-\u9FA5A-Za-z0-9_-]+$/,
+    //     message: '不能输入特殊字符'
+    // },
+    // //英文大小写，数字，英文符号
+    // special1: {
+    //     pattern: /^[A-Za-z0-9\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]$/,
+    //     message: '只能输入一个英文,数字,符号'
+    // },
+    // num_decimal: {
+    //     pattern: /^((([1-9]\d*)(\.\d*[1-9])?)|(0\.\d*[1-9]))$/,
+    //     message: '请输入正确的整数或小数'
+    // },
+    // num_decimal1: {
+    //     pattern: /^(([-]?([1-9]\d*)(\.\d*[1-9])?)|([-]?0\.\d*[1-9])|0)$/,
+    //     message: '请输入正确的整数或小数'
+    // },
 };
 
