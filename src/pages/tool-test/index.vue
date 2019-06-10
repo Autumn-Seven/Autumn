@@ -11,6 +11,16 @@
   </div>
 </template>
 <script>
+
+    import Vue from 'vue';
+    import iView from 'iview';
+    import 'iview/dist/styles/iview.css';
+    // import i18n from '@/locale';
+    Vue.use(iView
+        // , {i18n: (key, value) => i18n.t(key, value)}
+    );
+
+
     export default {
         name: ''
     }

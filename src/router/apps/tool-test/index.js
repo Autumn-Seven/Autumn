@@ -26,6 +26,11 @@ export default [
                 component: () => import('@/pages/tool-test/echart/echart3D.vue'),
                 meta: {auth: false, title: 'echart3D  '},
             },
+            {
+                path: 'formRules',
+                component: () => import('@/pages/tool-test/formRules/formRules.vue'),
+                meta: {auth: false, title: 'formRules  '},
+            },
         ]
     },
 ];

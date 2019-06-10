@@ -1,6 +1,6 @@
 import axios from 'axios';
 import AJAX_SOURCE from '@/dim/ajaxSource';
-import utiljs from 'tool/util.js';
+import utiljs from '@/util/util.js';
 import {CODE_KEY, MESSAGE_KEY, RESULT_KEY, SUCCESS_CODE, FAILD_CODE} from '@/dim/ajaxStruct';
 import ajaxIntercept from  './ajaxIntercept.js'
 

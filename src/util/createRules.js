@@ -1,0 +1,216 @@
+/**
+ * Created by Seven on 2019/6/6.
+ * project: Autumn
+ * email: fighting20xx@126.com
+ */
+
+
+
+
+/** createRules方法：
+ *      @param {*} customeRules ,  OriginalRules
+ *      2个参数，第一个自定的规则，第二个原始的规则，
+ *
+ * 案例：
+ ruleInline:createRules({
+                name: ['required', 'len_32', 'special'],
+                profileName: ['required', 'len_32', 'special'],
+                gatewayId: ['required_change'],
+
+            },{
+                code: [
+                    {required: true, message: '请输入', trigger: 'blur'},
+                ],
+            }),
+ *
+ * 最后合并成表单的规则。
+ */
+export const createRules = (customeRules = {} ,  OriginalRules = {}) => {
+    let rule = {};
+    function addRule(key, validator) {
+        rule[key] ?  rule[key].push(validator) :rule[key] = [validator];
+    }
+
+
+    // 自定义的规则写法，
+    for (let name in customeRules) {
+        customeRules[name].forEach(function(key) {
+            for (let myKey in myRules) {
+                let myRule = myRules[myKey];
+
+                if(myKey === key){
+                    addRule(name,myRule )
+                }else if(myRule.reg && myRule.reg.test(key)){
+                    addRule(name,myRule.result(key.match(myRule.reg)) )
+                }
+            }
+        })
+    }
+
+
+    //原始的规则写法
+    for (let key in OriginalRules) {
+        addRule(key, OriginalRules[key]);
+    }
+    console.log(rule);
+    return rule;
+};
+
+
+
+
+
+
+
+
+/** * 
+ * 自己定义的规则：2种模式：
+ *      1.名字相同的直接复制
+ *      2.用正则表达式去匹配名字，如：len_20  对应  ---->  len_x
+ * 
+ * **/
+
+var myRules = {
+    len_x: {
+        type:'len_x',
+        reg:/^len_(0|[1-9]*)$/,
+        result:function(match) {
+            return {
+                validator: function (rule, value, callback) {
+
+                    let len = parseInt(match[1]);
+
+                    if (value.length > len) {
+                        callback(new Error(`最大长度${len}`))
+                    } else {
+                        callback()
+                    }
+                }
+            }
+        }
+    },
+    num_max: {
+        type:'num_max',
+        reg:/^num_(0|[1-9]\d*)$/,
+        result:function(match) {
+            return {
+                validator: function (rule, value, callback) {
+
+                    let max = parseInt(match[1]);
+
+                    if (Number(value) > max || Number(value) < 0) {
+                        callback(new Error(`最大值为${max}`))
+                    } else {
+                        callback()
+                    }
+                }
+            }
+        }
+    },
+    float_max: {
+        type:'float_max',
+        reg:/^float_(([-]?([1-9]\d*)(\.\d*[1-9])?)|([-]?0\.\d*[1-9])|0)$/,
+        result:function(match) {
+            return {
+                validator: function (rule, value, callback) {
+
+                    let max = parseFloat(match[1]);
+
+                    if (Number(value) > max || Number(value) < 0) {
+                        callback(new Error(`最大值为${max}`))
+                    } else {
+                        callback()
+                    }
+                }
+            }
+        }
+    },
+
+
+    /**  输入如：type_string, type_number
+     *
+         string：必须是类型string。This is the default type.
+         number：必须是类型number。
+         boolean：必须是类型boolean。
+         method：必须是类型function。
+         regexp：必须是RegExp创建新项时不生成异常的实例或字符串RegExp。
+         integer：必须是类型number和整数。
+         float：必须是类型number和浮点数。
+         array：必须是由...确定的数组Array.isArray。
+         object：必须是类型object而不是Array.isArray。
+         enum：价值必须存在于enum。
+         date：值必须有效，由确定 Date
+         url：必须是类型url。
+         hex：必须是类型hex。
+         email：必须是类型email。
+     * */
+    type_: {
+        type:'type_',
+        reg:/^type_([a-zA-Z]*)$/,
+        result:function(match) {
+            let type =  match[1];
+            return {
+                type:type,
+                message:`必须是${type}类型`,
+            }
+        }
+    },
+
+
+
+    num: {
+        type: 'string',
+        pattern: /^(0|[1-9]\d*)$/,
+        message: '只能输入自然数'
+    },
+
+    required: {
+        required: true,
+        message: '不能为空',
+        trigger: 'blur',
+    },
+    required_change: {
+        required: true,
+        message: '必选项',
+        trigger: 'change',
+    },
+    required_change_arr: {
+        required: true,
+        message: '不能为空',
+        trigger: 'change',
+        type: 'array'
+    },
+    // // 中英文、数字、下划线、减号
+    // special: {
+    //     pattern: /^[\u4E00-\u9FA5A-Za-z0-9_-]+$/,
+    //     message: '不能输入特殊字符'
+    // },
+    // //英文大小写，数字，英文符号
+    // special1: {
+    //     pattern: /^[A-Za-z0-9\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]$/,
+    //     message: '只能输入一个英文,数字,符号'
+    // },
+
+
+    num_decimal: {
+        pattern: /^((([1-9]\d*)(\.\d*[1-9])?)|(0\.\d*[1-9]))$/,
+        message: '请输入正确的整数或小数'
+    },
+    num_decimal1: {
+        pattern: /^(([-]?([1-9]\d*)(\.\d*[1-9])?)|([-]?0\.\d*[1-9])|0)$/,
+        message: '请输入正确的整数或小数'
+    },
+    num_arr: {
+        pattern: /^([1-9]+[,])*([1-9]+)$/,
+        message: '只能输入正整数,以","隔开'
+    },
+    arr: {
+        pattern: /^([\u4E00-\u9FA5A-Za-z0-9,]+[,])*([\u4E00-\u9FA5A-Za-z0-9]+)$/,
+        message: '只能输入中文,数字,字母大小写,以","隔开',
+    },
+    ip: {
+        pattern: /^((25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))$/,
+        message: '只能输入IP地址'
+    },
+};
+

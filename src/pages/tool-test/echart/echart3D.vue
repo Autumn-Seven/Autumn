@@ -13,7 +13,7 @@
 <script>
 
 
-    import utiljs from 'tool/util.js';
+    import utiljs from '@/util/util.js';
     import echarts from 'echarts';
     import 'echarts-gl';
 

@@ -54,7 +54,7 @@
 <script>
 
     import {AJAX_WATER} from '@/dim/ajaxSource.js'
-    import util from 'tool/util.js'
+    import util from '@/util/util.js'
     import {province,financialType} from '@/util/optionsList.js';
 
     export default {

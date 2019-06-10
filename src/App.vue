@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import util from 'tool/util.js'
+    import util from '@/util/util.js'
 
     export default {
         name: 'App',

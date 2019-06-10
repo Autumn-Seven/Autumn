@@ -45,8 +45,19 @@ const importMixin = Vue => {
 			},
 		}
 	});
-
-
 };
 
+
+
+/**
+ 获取URL参数， 或者字典的用法。
+
+ mounted: function () {
+    this.getURLList('warehouseareas/listTableDetails', this.select3List, 'post')
+    this.getURLList('product-type', this.select1List, 'post')
+    this.getURLList('supplier', this.select2List, 'post')
+
+    this.getDictionary('ValidateType', this.select3List)
+},
+**/
 export default importMixin
