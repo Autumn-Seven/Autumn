@@ -35,23 +35,25 @@
 </script>
 
 <style lang="less">
+    html,body {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        text-align: center;
         color: #2c3e50;
-
-        position: absolute;
-        top: 0;
-        left: 0;
+        font-size: 1rem;
         width: 100%;
         height: 100%;
-        box-sizing: border-box;
-        font-size: 1rem;
         margin: 0;
         padding: 0;
-        overflow: hidden;
     }
 
     .fade-enter-active,

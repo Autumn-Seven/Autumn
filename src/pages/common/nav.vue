@@ -10,7 +10,7 @@
         <div class="nav-list-wrap">
             <div class="nav-list"  v-for="list,index in allRouterList" :key="index">
                 <div  class="nav-item"  v-for="item,index2 in list" :key="index2">
-                    <router-link :to="item.path" >{{item.name}}</router-link>
+                    <router-link :to="item.path" >{{index2+ ': '+item.name}}</router-link>
                 </div>
             </div>
         </div>
@@ -65,10 +65,11 @@
         .nav-list-wrap{
             display: flex;
             justify-content: center;
+            text-align: left;
             .nav-list{
                 .nav-item{
                     padding: 2px;
-                    width: 160px;
+                    width: 200px;
                 }
             }
         }

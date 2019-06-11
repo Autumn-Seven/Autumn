@@ -27,9 +27,17 @@
 </script>
 <style>
     .main-tool-test{
+
         height: 100%;
+        width: 100%;
+        position: relative;
+        padding: 15px;
+        /*margin: 10px;*/
+        box-sizing: border-box;
     }
     .test-title{
+        position: fixed;
+        left: 0;
         margin: 20px;
         color: lightslategray;
         font-size: 1.9rem;

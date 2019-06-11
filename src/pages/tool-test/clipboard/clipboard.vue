@@ -20,6 +20,8 @@
         <Button class="test-clip2" type="primary" data-clipboard-target="#foo2" data-clipboard-action="cut" v-clipboard="option">剪切</Button>
         <Button class="test-clip2" type="primary" data-clipboard-target="#foo2" data-clipboard-action="copy"  v-clipboard="option">复制</Button>
         <Button class="test-clip2" type="primary" >复制</Button>
+
+
     </div>
 </template>
 <script>

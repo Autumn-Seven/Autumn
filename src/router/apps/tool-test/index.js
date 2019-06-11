@@ -29,12 +29,17 @@ export default [
             {
                 path: 'formRules',
                 component: () => import('@/pages/tool-test/formRules/formRules.vue'),
-                meta: {auth: false, title: 'formRules  '},
+                meta: {auth: false, title: 'formRules 表单验证封装'},
             },
             {
                 path: 'clipboard',
                 component: () => import('@/pages/tool-test/clipboard/clipboard.vue'),
-                meta: {auth: false, title: 'clipboard'},
+                meta: {auth: false, title: 'clipboard 剪切板'},
+            },
+            {
+                path: 'vue-waterfall',
+                component: () => import('@/pages/tool-test/vue-waterfall/vue-waterfall.vue'),
+                meta: {auth: false, title: 'vue-waterfall 瀑布流'},
             },
         ]
     },
