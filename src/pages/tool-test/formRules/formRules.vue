@@ -73,6 +73,7 @@
                 infoData: {},
                 gatewayList: [{id:20,name:'第一个'},{id:24,name:'第二个'}],
                 tempsList: [{id:20,name:'第一个'},{id:24,name:'第二个'}],
+
             };
         },
         methods: {

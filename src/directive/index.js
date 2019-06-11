@@ -1,11 +1,11 @@
 // import draggable from './module/draggable'
-// import clipboard from './module/clipboard'
+import clipboard from './module/clipboard'
 import formitemshow from './module/formitemshow'
 import permission, { checkPermission } from './module/permission'
 
 const directive = {
 	// draggable,
-	// clipboard,
+	clipboard,
 	formitemshow,
 	permission,
 };
@@ -30,7 +30,7 @@ const importDirective = Vue => {
    *  error:    /复制失败后的回调/
    * }
 	 */
-	// Vue.directive('clipboard', directive.clipboard)
+	Vue.directive('clipboard', directive.clipboard)
 	/**
 	 * clipboard指令 v-draggable="options"
 	 * options = {

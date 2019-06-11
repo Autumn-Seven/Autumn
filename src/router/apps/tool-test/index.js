@@ -31,6 +31,11 @@ export default [
                 component: () => import('@/pages/tool-test/formRules/formRules.vue'),
                 meta: {auth: false, title: 'formRules  '},
             },
+            {
+                path: 'clipboard',
+                component: () => import('@/pages/tool-test/clipboard/clipboard.vue'),
+                meta: {auth: false, title: 'clipboard'},
+            },
         ]
     },
 ];
