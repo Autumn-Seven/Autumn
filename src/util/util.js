@@ -254,8 +254,7 @@ let global = this || {};
         inherits(clazz, baseClazz) {
             var clazzPrototype = clazz.prototype;
 
-            function F() {
-            }
+            function F() {}
 
             F.prototype = baseClazz.prototype;
             clazz.prototype = new F();
@@ -1311,7 +1310,27 @@ let global = this || {};
                 arr[len] = temp;
             }
             return arr;
+        },
+
+
+
+        /***
+         * 数组抽取，间隔一定的数目， 或者取得总数为多少。
+         * */
+        extract (arr, space, max ) {
+
+            // var len = arr.length,
+            //     i,temp;
+            // while(len){
+            //     i = Math.floor(Math.random() * len--);
+            //     temp = arr[i];
+            //     arr[i] = arr[len];
+            //     arr[len] = temp;
+            // }
+            // return arr;
         }
+
+
 
     };
     var gidUtil = {

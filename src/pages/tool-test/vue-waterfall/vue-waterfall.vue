@@ -85,7 +85,7 @@
 
     var ItemFactory = (function () {
 
-        var lastIndex = 0
+        var lastIndex = 0;
 
         function generateRandomItems (count) {
             var items = [], i
