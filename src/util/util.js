@@ -1026,6 +1026,74 @@ let global = this || {};
             return result;
         },
 
+        /**
+         * 时间加减。
+         * @param {Date|Number|String} dDate
+         * @param2 {String}
+         * @param3 {String}    '+'加法，  其他默认为减法
+         * @return {String}
+         *
+         * 为什么要分为2步呢？   日时分秒，是直接可以计算加出来的， 换算成毫秒， 不用关心进位
+         *                      年月 就是不固定的了，一个月有  28，29，30，31天， 加月只能是数字 +1 不能按天算，
+         */
+        timeAddOrSub: function(dDate, dDate2={y:0,M:0,d:0,h:0,m:0,s:0}, add = '+') {
+            var deltData= Object.assign({
+                y: 0,	// 年。
+                M: 0,	// 月。
+                d: 0,	// 日。
+                h: 0,	// 时。
+                m: 0,	// 分。
+                s: 0	// 秒。
+            },dDate2);
+
+            var isAdd = add === '+';
+            var _y = deltData.y;
+            var _M = deltData.M;
+
+            var date = this.parseDate(dDate);
+            let _year ;
+            let _month ;
+
+            if(isAdd){
+                _year = date.getFullYear() + _y;
+                _month =  date.getMonth() + 1 + _M;
+                while (_month > 12){
+                    _month -= 12;
+                    _year += 1;
+                }
+            }else {
+                _year = date.getFullYear() - _y;
+                _month =  date.getMonth() + 1 - _M;
+                while (_month < 0 ){
+                    _month += 12;
+                    _year -= 1;
+                }
+            }
+            let _date = date.getDate();
+            let _hour = date.getHours();
+            let _minute = date.getMinutes();
+            let _second = date.getSeconds();
+
+            let firstResult =  _year + '-' + _month + '-' + _date + ' ' + _hour + ':' +
+                _minute + ':' + _second;
+
+
+            let sDate = this.parseDate(firstResult);
+            var dateTimeStamp = sDate.getTime();
+            var _s = deltData.s * 1000 ;
+            var _m = deltData.m * 1000 * 60;
+            var _h = deltData.h * 1000 * 60 * 60;
+            var _d = deltData.d * 1000 * 60 * 60 * 24;
+
+            //dateStr格式：2017-08-17 10:39:27
+            //转换成时间戳
+
+            var dateTimeStampCount = _s + _m + _h + _d;
+            var result = isAdd ? dateTimeStamp + dateTimeStampCount  : dateTimeStamp - dateTimeStampCount;
+
+            return this.formatDate(result);
+        },
+
     };
     var numberUtil = {
 
