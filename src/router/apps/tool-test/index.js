@@ -48,7 +48,7 @@ export default [
             },
             {
                 path: 'transition',
-                component: () => import('@/pages/tool-test/Animate/transition.vue'),
+                component: () => import('@/pages/tool-test/transition/transition.vue'),
                 meta: {auth: false, title: 'vue transition组件'},
             },
         ]

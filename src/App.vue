@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-        <transition name="fade" mode="out-in">
-            <router-view></router-view>
+        <transition :name="transitionName" mode="out-in">
+            <router-view  class="Router"></router-view>
         </transition>
     </div>
 </template>
@@ -13,6 +13,22 @@
 
     export default {
         name: 'App',
+        data() {
+            return {
+                transitionName: 'slide-right'  // 默认动态路由变化为slide-right
+            }
+        },
+        watch: {
+            '$route' (to, from) {
+                let isBack = this.$router.isBack  //  监听路由变化时的状态为前进还是后退
+                if (isBack) {
+                    this.transitionName = 'slide-right'
+                } else {
+                    this.transitionName = 'slide-left'
+                }
+                this.$router.isBack = false
+            }
+        },
         mounted:function() {
             this.recovery();
         },
@@ -24,6 +40,8 @@
 </script>
 
 <style lang="scss">
+    @import 'assets/css/animate.min.css';
+
     html,body {
         width: 100%;
         height: 100%;
@@ -45,10 +63,29 @@
         padding: 0;
     }
 
-    .fade-enter-active,.fade-leave-active {
-        transition: all .3s ease;
+
+    .Router {
+        transition: all .8s ease;
     }
-    .fade-enter,.fade-leave-active {
+
+    .slide-left-enter,
+    .slide-right-leave-active {
         opacity: 0;
+
+        transform: translate( 0,100%);
     }
+
+    .slide-left-leave-active,
+    .slide-right-enter {
+        opacity: 0;
+        transform: translate( 0,-100%);
+
+    }
+
+    /*.fade-enter-active,.fade-leave-active {*/
+        /*transition: all .3s ease;*/
+    /*}*/
+    /*.fade-enter,.fade-leave-active {*/
+        /*opacity: 0;*/
+    /*}*/
 </style>
