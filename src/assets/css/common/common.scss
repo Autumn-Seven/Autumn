@@ -1,0 +1,99 @@
+/**
+ * Created by Seven on 2019/6/20.
+ * project: jiulingCompany
+ * email: fighting20xx@126.com
+ */
+
+html , body{
+    color:white;
+    @include box-sizing(border-box);
+    height: 100%;
+    width: 100%;
+    margin: 0 !important;
+    padding: 0;
+    font-family: 'Microsoft YaHei';
+    text-align: center;
+}
+
+.max-width-center{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@mixin max-width-center(){
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+//@font-face {
+//    font-family: adidasSport;
+//    src: url('~@/assets/font/adidas sport.ttf');
+//}
+
+
+.display-flex{
+    @include display-flex();
+    &-reverse{
+        @include flex-direction(row-reverse);
+    }
+    &-column{
+        @include flex-direction(column);
+    }
+    &-column-reverse{
+        @include flex-direction(column-reverse);
+    }
+}
+.justify-content{
+    @include justify-content(flex-start);
+    &-center{
+        @include justify-content(center);
+    }
+    &-end{
+        @include justify-content(flex-end);
+    }
+    &-around{
+        @include justify-content(space-around);
+    }
+    &-between{
+        @include justify-content(space-between);
+    }
+}
+.align-items{
+    @include align-items(stretch);
+    &-center{
+        @include align-items(center);
+    }
+    &-start{
+        @include align-items(flex-start);
+    }
+    &-end{
+        @include align-items(flex-end);
+    }
+}
+@mixin be-absolute-center{
+    position: absolute;
+    left: 50%;
+    top:50%;
+    //width: 100%;
+    //height: 100%;
+    @include transform(translate(-50%, -50%)) ;
+}
+@mixin be-flex-center{
+    @include display-flex();
+    @include justify-content(center);
+    @include align-items(center);
+}
+.common-button{
+    width:180px;
+    height: 48px;
+    text-align: center;
+    font-size:18px;
+    font-weight:400;
+    line-height: 48px;
+    margin: 0 auto;
+    border:solid 1px #fff;
+    @include border-radius(40px) ;
+    &:hover{
+        background-color:rgba(90, 199, 226, .3);
+    }
+}

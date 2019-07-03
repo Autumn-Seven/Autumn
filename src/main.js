@@ -10,7 +10,8 @@ import Ajax from '@/libs/ajax';
 import importDirective from '@/directive';
 import $ from 'jquery'
 
-
+import '../src/assets/css/common/normalize.less';
+//
 
 
 

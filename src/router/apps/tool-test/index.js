@@ -41,6 +41,16 @@ export default [
                 component: () => import('@/pages/tool-test/vue-waterfall/vue-waterfall.vue'),
                 meta: {auth: false, title: 'vue-waterfall 瀑布流'},
             },
+            {
+                path: 'Animate',
+                component: () => import('@/pages/tool-test/Animate/Animate.vue'),
+                meta: {auth: false, title: 'Animate.css库'},
+            },
+            {
+                path: 'transition',
+                component: () => import('@/pages/tool-test/Animate/transition.vue'),
+                meta: {auth: false, title: 'vue transition组件'},
+            },
         ]
     },
 ];

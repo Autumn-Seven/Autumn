@@ -7,6 +7,8 @@
 </template>
 
 <script>
+
+
     import util from '@/util/util.js'
 
     export default {
@@ -16,25 +18,12 @@
         },
         methods: {
             recovery(){
-//                let user = util.get('user');
-//                let role = this.$store.state.user.role;
-//
-//                console.log(role);
-//
-//                if(role !== ''){
-//                    return;
-//                }else if(user){
-//                    this.$store.commit('setUser', user );
-//                }else {
-//                    this.$router.push('/login');
-//                }
-
             },
         },
     }
 </script>
 
-<style lang="less">
+<style lang="scss">
     html,body {
         width: 100%;
         height: 100%;
@@ -56,12 +45,10 @@
         padding: 0;
     }
 
-    .fade-enter-active,
-    .fade-leave-active {
-        transition: all .2s ease;
+    .fade-enter-active,.fade-leave-active {
+        transition: all .3s ease;
     }
-    .fade-enter,
-    .fade-leave-active {
+    .fade-enter,.fade-leave-active {
         opacity: 0;
     }
 </style>
