@@ -7,7 +7,6 @@
 
 <script>
     import {AJAX_WATER} from '@/dim/ajaxSource.js'
-    import common from '@/components/common/common'
     import util from '@/util/util.js';
 
     import X2JS from 'x2js';

@@ -6,39 +6,30 @@
  */ 
 <template>
     <div class="content-wrap">
-
-        <!--<img class="title-1" src="~@/assets/img/productionIntroduction/我们的蓝图.png"/>-->
-
-        <div class="tabs-row" v-for="dataArry,i in mulTabsArry" :key="i">
+        <div class="tabs-row" v-for="dataArry,rowIndex in mulTabsArry" :key="rowIndex">
             <div class="tabs-row-wrap">
                 <div class="tabs-item" v-for="tab,index in  dataArry" :key="index"
                      @click="selectStyle (tab,index) "
                      :class="{'active':tab.active}">
                     <div class="tab-title-content" :class="[{'tab-title-active':currentIndex===tab.number}]">
-                        <!--<img src="~@/assets/img/productionIntroduction/选中样式.png" v-show="currentIndex===tab.number">-->
-                        <!--<img src="~@/assets/img/solution/smartSolution-2.png" v-show="currentIndex!==tab.number">-->
                         <div class="tab-name">{{tab.name}}</div>
                     </div>
-                    <!--<div class="sanjiaoxing" v-show="currentIndex===tab.number"></div>-->
-                    <!--<div class="sanjiaoxing sanjiaoxing2 " v-show="currentIndex===tab.number"></div>-->
                 </div>
             </div>
 
-            <div class="content-inner" v-show="showThisTow(dataArry)">
-                <div class="content-item-wrap">
-                    <div class="content-item" v-for="item,index2 in  currentTab.contentArry" :key="index2">
-                        <!--<div class="image-wrap">-->
-                        <!--<img class="logo-img" :src="item.icon">-->
-                        <!--<div class="img-mask">{{item.name}}</div>-->
-                        <!--</div>-->
-                        <div class="active-content">
-                            <!--<img class="active-img" :src="item.icon"> </img>-->
-                            <div class="active-name">{{item.name}}</div>
-                            <div class="content">{{item.content}}</div>
+
+            <!--<transition-group name="test"    enter-active-class=" zoomInLeft"  leave-active-class="  zoomOutRight">-->
+                <div class="content-inner animated " v-show="currentTabRowIndex ===rowIndex  && col.number === currentTab.number" v-for="col ,j in dataArry"  :key="rowIndex+'-'+j">
+                    <div class="content-item-wrap">
+                        <div class="content-item" v-for="item,index2 in  currentTab.contentArry" :key="index2" >
+                            <div class="active-content">
+                                <div class="active-name">{{item.name}}</div>
+                                <div class="content">{{item.content}}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            <!--</transition-group>-->
         </div>
     </div>
 </template>
@@ -50,6 +41,8 @@
         props: {},
         data (){
             return {
+                currentTabRowIndex: 1,
+                currentTab: {},
                 currentIndex: 1,
                 mulTabsArry: [
                     [
@@ -197,20 +190,20 @@
             }
         },
         computed: {
-            currentTab(){
-                let currentIndex = this.currentIndex;
-                let tab = {};
-                this.mulTabsArry.forEach(function (tabRow) {
-                    tabRow.forEach((item) => {
-                        item.active = false;
-                        if (item.number === currentIndex) {
-                            tab = item;
-                        }
-                    })
-                });
-
-                return tab || {};
-            }
+//            currentTab(){
+//                let currentIndex = this.currentIndex;
+//                let tab = {};
+//                this.mulTabsArry.forEach(function (tabRow) {
+//                    tabRow.forEach((item) => {
+//                        item.active = false;
+//                        if (item.number === currentIndex) {
+//                            tab = item;
+//                        }
+//                    })
+//                });
+//
+//                return tab || {};
+//            }
         },
         mounted (){
 
@@ -220,8 +213,12 @@
                 console.log(index);
                 this.currentIndex = index;
             },
-            selectStyle(tab){
+            selectStyle(tab,index){
                 this.currentIndex = tab.number;
+                this.currentTabRowIndex = index;
+                this.currentTab = tab;
+
+                console.log( this.currentIndex ,  this.currentTabRowIndex )
 
 //				this.mulTabsArry.forEach(function(tabRow){
 //					tabRow.forEach((item,index2)=>{
@@ -249,8 +246,10 @@
 </script>
 
 <style scoped lang="scss">
+    /*@import "animate.css";*/
+    @import './../../../assets/css/animate.css';
     .content-wrap {
-        @include linear-gradient(RGBA(49, 64, 123, 1),RGBA(212, 211, 225, 1));
+        /*<!--@include linear-gradient(RGBA(49, 64, 123, 1),RGBA(212, 211, 225, 1));-->*/
         background-repeat: no-repeat;
         background-size: 100% 100%;
         height: 556px;
@@ -269,13 +268,13 @@
         .tabs-row {
             /*height: 100%;*/
             /*<!--@include flex-wrap(wrap);-->*/
-            background: rgba(70, 85, 126, .3);
+            /*background: rgba(70, 85, 126, .3);*/
             width: 1200px;
             margin: 0 auto;
             padding-bottom:50px;
             .tabs-row-wrap {
 
-                color: #fff;
+                color: #bbb;
                 /*background-color:rgba(255, 255, 255, .2);*/
                 @include box-shadow(0px 5px 10px RGBA(149, 163, 195, .8));
                 @include display-flex();
@@ -367,7 +366,7 @@
                                 /*padding: 5px;*/
                                 margin-top: 33px;
                                 line-height:25px;
-                                color: #fff;
+                                color: #eee;
                                 /*font-weight:600;*/
 
                             }

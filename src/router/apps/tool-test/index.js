@@ -51,6 +51,16 @@ export default [
                 component: () => import('@/pages/tool-test/transition/transition.vue'),
                 meta: {auth: false, title: 'vue transition组件'},
             },
+            {
+                path: 'js-base64',
+                component: () => import('@/pages/tool-test/js-base64/js-base64.vue'),
+                meta: {auth: false, title: 'js-base64加密解密'},
+            },
+            {
+                path: 'mySwiper',
+                component: () => import('@/pages/tool-test/mySwiper/swiper.vue'),
+                meta: {auth: false, title: 'mySwiper自己写的'},
+            },
         ]
     },
 ];

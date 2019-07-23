@@ -48,7 +48,7 @@
     </div>
 </template>
 <script>
-import '@/components/common/common.scss';
+
 import {AJAX_WATER} from '@/dim/ajaxSource.js'
 import articleCard from '@/components/articleCard.vue'
 import barChart from '@/components/barChart.vue'

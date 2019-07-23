@@ -19,7 +19,6 @@
 
 <script>
     import api from '@/api/backend'
-    import common from '@/components/common/common'
     export default {
         data() {
             return {

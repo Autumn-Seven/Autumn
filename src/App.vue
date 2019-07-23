@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <transition :name="transitionName" mode="out-in">
-            <router-view  class="Router"></router-view>
+            <router-view ></router-view>
         </transition>
     </div>
 </template>
@@ -15,17 +15,18 @@
         name: 'App',
         data() {
             return {
-                transitionName: 'slide-right'  // 默认动态路由变化为slide-right
+                transitionName: 'slide-right1'  // 默认动态路由变化为slide-right
             }
         },
         watch: {
             '$route' (to, from) {
                 let isBack = this.$router.isBack  //  监听路由变化时的状态为前进还是后退
-                if (isBack) {
-                    this.transitionName = 'slide-right'
-                } else {
-                    this.transitionName = 'slide-left'
-                }
+//                if (isBack) {
+//                    this.transitionName = 'slide-right'
+//                } else {
+                    this.transitionName = 'slide-left1'
+//                }
+
                 this.$router.isBack = false
             }
         },
@@ -41,6 +42,7 @@
 
 <style lang="scss">
     @import 'assets/css/animate.min.css';
+
 
     html,body {
         width: 100%;
@@ -68,15 +70,12 @@
         transition: all .8s ease;
     }
 
-    .slide-left-enter,
-    .slide-right-leave-active {
+    .slide-left1-enter,.slide-right-leave-active {
         opacity: 0;
-
         transform: translate( 0,100%);
     }
 
-    .slide-left-leave-active,
-    .slide-right-enter {
+    .slide-left1-leave-active,.slide-right-enter {
         opacity: 0;
         transform: translate( 0,-100%);
 
