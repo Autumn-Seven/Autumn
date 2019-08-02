@@ -17,6 +17,11 @@ export default [
                 meta: {auth: false, title: 'keymaster 键盘事件库'},
             },
             {
+                path: 'vue-touch-keyboard',
+                component: () => import('@/pages/tool-test/virtual-keyboard/vue-touch-keyboard.vue'),
+                meta: {auth: false, title: 'vue-touch-keyboard 虚拟键盘'},
+            },
+            {
                 path: 'sortablejs',
                 component: () => import('@/pages/tool-test/sortablejs/sortablejs.vue'),
                 meta: {auth: false, title: 'sortablejs  鼠标拖拽库'},
@@ -60,6 +65,11 @@ export default [
                 path: 'mySwiper',
                 component: () => import('@/pages/tool-test/mySwiper/swiper.vue'),
                 meta: {auth: false, title: 'mySwiper自己写的'},
+            },
+            {
+                path: 'zIndex',
+                component: () => import('@/pages/tool-test/htmlProperty/zIndex.vue'),
+                meta: {auth: false, title: 'zIndex属性测试'},
             },
         ]
     },
