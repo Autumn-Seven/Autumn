@@ -38,8 +38,8 @@ export const createRules = (customeRules = {} ,  OriginalRules = {}) => {
     // 自定义的规则写法，
     for (let name in customeRules) {
         customeRules[name].forEach(function(key) {
-            for (let myKey in myRules) {
-                let myRule = myRules[myKey];
+            for (let myKey in RULES) {
+                let myRule = RULES[myKey];
 
                 if(myKey === key){
                     addRule(name,myRule )
@@ -75,7 +75,7 @@ export const createRules = (customeRules = {} ,  OriginalRules = {}) => {
  * 
  * **/
 
-var myRules = {
+var RULES = {
     len_x: {
         type:'len_x',
         reg:/^len_(0|[1-9]*)$/,
@@ -205,6 +205,14 @@ var myRules = {
         pattern: /^((25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))$/,
         message: '只能输入IP地址'
     },
+    email: {
+        pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
+        message: '请输入正确的邮箱'
+    },
+    phone: {
+        pattern: /^[1]([3-9])[0-9]{9}$/,
+        message: '请输入11位手机号'
+    },
 
 
 
@@ -226,4 +234,6 @@ var myRules = {
     //     message: '请输入正确的整数或小数'
     // },
 };
+
+export default  RULES
 

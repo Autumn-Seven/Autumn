@@ -20,7 +20,7 @@ let global = this || {};
          * @return {Object}
          */
         conflict: function() {
-            window._util = _util;
+            global._util = _util;
             return Utils;
         },
 
@@ -1621,6 +1621,55 @@ let global = this || {};
         userAgent: u
     };
 
+    /**
+     * 函数工具
+     * */
+    var funUtil = {
+        /**
+         * 什么也不做
+         */
+        noop() {},
+    };
+
+
+    /**
+     * 正则工具
+     * */
+    var regUtil = {
+
+        /**
+         * email
+         */
+        isEmail (str) {
+            return (/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/.test(str))
+        },
+
+        /**
+         * 身份证
+         * */
+        isIdCard (str){
+            return /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/.test(str)
+        },
+
+
+        /**
+         * 手机号
+         * */
+        isPhoneNum : function isPhoneNum(str) {
+            return (/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(str)
+            );
+        },
+
+
+        /**
+         * url
+         * */
+        isUrl : function isUrl(str) {
+            return (/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i.test(str)
+            );
+        }
+    };
+
     Utils.extend(Utils, paramUtil);
     Utils.extend(Utils, cookieUtil);
     Utils.extend(Utils, dateUtil);
@@ -1630,6 +1679,8 @@ let global = this || {};
     Utils.extend(Utils, gidUtil);
     Utils.extend(Utils, colorUtil);
     Utils.extend(Utils, browserUtil);
+    Utils.extend(Utils, funUtil);
+    Utils.extend(Utils, regUtil);
 
     if (typeof module !== 'undefined' && module.exports) module.exports = Utils;
     if (typeof define === 'function') define(function() { return Utils; });
