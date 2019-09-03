@@ -71,6 +71,11 @@ export default [
                 component: () => import('@/pages/tool-test/htmlProperty/zIndex.vue'),
                 meta: {auth: false, title: 'zIndex属性测试'},
             },
+            {
+                path: 'amap',
+                component: () => import('@/pages/tool-test/amap/amap.vue'),
+                meta: {auth: false, title: '测试高德地图'},
+            },
         ]
     },
 ];

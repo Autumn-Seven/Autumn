@@ -2,12 +2,22 @@
     <div class="test-box">
         啊发顺丰的
 
+
+        <el-date-picker
+                v-model="timeRange"
+                type="datetimerange"
+                :picker-options="pickerOptions"
+                @on-change="dateChange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期">
+        </el-date-picker>
     </div>
 </template>
 
 <script>
     import {AJAX_WATER} from '@/dim/ajaxSource.js'
-    import util from '@/util/util.js';
+    import utiljs from '@/util/util.js';
 
     import X2JS from 'x2js';
 
@@ -15,13 +25,51 @@
 
     export default {
         data() {
-            return {};
+            let self = this;
+            return {
+                timeRange: [ utiljs.formatDate(new Date()- 2*24*60*60*1000 ), utiljs.formatDate(new Date())],
+                packerTime:{},
+                pickerOptions: {
+                    onPick:function(time){
+                        console.log(self.packerTime = time)
+                    },
+                    disabledDate:function(date) {
+                        var time = new Date(utiljs.formatDate(new Date(date),'yyyy-MM-dd')).getTime();
+
+
+                        var min = new Date('2000-01-01 00:00:00').getTime()
+                        // console.log(min)
+                        var max = new Date().getTime();
+                        var pickerMin = self.packerTime.minDate;
+                        var pickerMax = self.packerTime.manDate;
+                        if(pickerMin){
+                            min = new Date(utiljs.formatDate(new Date(pickerMin),'yyyy-MM-dd')+' 00:00:00').getTime() -  24*60*60*1000;
+                            max = new Date(utiljs.formatDate(new Date(pickerMin),'yyyy-MM-dd')+' 00:00:00').getTime() +  2*24*60*60*1000;
+                        }
+                        if(pickerMax){
+                            min = new Date(utiljs.formatDate(new Date(pickerMin),'yyyy-MM-dd')+' 00:00:00').getTime() -  24*60*60*1000;
+                            max = new Date(utiljs.formatDate(new Date(pickerMax),'yyyy-MM-dd')+' 00:00:00').getTime() +  24*60*60*1000+1;
+                        }
+
+                        console.log(min, time, max)
+
+                        let flag =  date
+                            &&  time <= max
+                            &&  time >= min
+
+                        return !flag
+                    }
+                },
+            };
         },
         mounted: function() {
-            this.login();
+            // this.login();
         },
         methods: {
 
+            dateChange(){
+                this.packerTime = {}
+            },
             login(){
 
 
