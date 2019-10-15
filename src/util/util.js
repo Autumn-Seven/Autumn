@@ -20,7 +20,7 @@ let global = this || {};
          * @return {Object}
          */
         conflict: function() {
-            global._util = _util;
+            window._util = _util;
             return Utils;
         },
 
@@ -39,7 +39,7 @@ let global = this || {};
             return Utils.typeOf(o) === 'number';
         },
         isBoolean(o) { //是否boolean
-            return Utils.typeOf(obj) === 'boolean';
+            return Utils.typeOf(o) === 'boolean';
         },
         isFunction(o) { //是否函数
             return Utils.typeOf(o) === 'function';
@@ -105,7 +105,7 @@ let global = this || {};
         merge(target, source, overwrite) {
             // We should escapse that source is string
             // and enter for ... in ...
-            if (!isObject(source) || !isObject(target)) {
+            if (!this.isObject(source) || !this.isObject(target)) {
                 return overwrite ? clone(source) : target;
             }
 
@@ -114,23 +114,23 @@ let global = this || {};
                     var targetProp = target[key];
                     var sourceProp = source[key];
 
-                    if (isObject(sourceProp)
-                        && isObject(targetProp)
-                        && !isArray(sourceProp)
-                        && !isArray(targetProp)
-                        && !isDom(targetProp)
-                        && !isBuiltInObject(sourceProp)
-                        && !isBuiltInObject(targetProp)
-                        && !isPrimitive(sourceProp)
-                        && !isPrimitive(targetProp)
+                    if (this.isObject(sourceProp)
+                        && this.isObject(targetProp)
+                        && !this.isArray(sourceProp)
+                        && !this.isArray(targetProp)
+                    // && !this.isDom(targetProp)
+                    // && !this.isBuiltInObject(sourceProp)
+                    // && !this.isBuiltInObject(targetProp)
+                    // && !this.isPrimitive(sourceProp)
+                    // && !this.isPrimitive(targetProp)
                     ) {
                         // 如果需要递归覆盖，就递归调用merge
-                        merge(targetProp, sourceProp, overwrite);
+                        this.merge(targetProp, sourceProp, overwrite);
                     }
                     else if (overwrite || !(key in target)) {
                         // 否则只处理overwrite为true，或者在目标对象中没有此属性的情况
                         // NOTE，在 target[key] 不存在的时候也是直接覆盖
-                        target[key] = clone(source[key], true);
+                        target[key] =this.clone(source[key], true);
                     }
                 }
             }
@@ -140,7 +140,7 @@ let global = this || {};
         mergeAll(targetAndSources, overwrite) {
             var result = targetAndSources[0];
             for (var i = 1, len = targetAndSources.length; i < len; i++) {
-                result = merge(result, targetAndSources[i], overwrite);
+                result = this.merge(result, targetAndSources[i], overwrite);
             }
             return result;
         },
@@ -358,7 +358,7 @@ let global = this || {};
 
             return this.setParam(sParamName, REMOVE_VALUE, sUrl).
                 replace(new RegExp(
-                        '([\?&]?)' + sParamName + '=' + REMOVE_VALUE + '[&]?', 'g'),
+                    '([\?&]?)' + sParamName + '=' + REMOVE_VALUE + '[&]?', 'g'),
                     '$1') // 过滤对应的参数项。
                 .replace(/&$/, '') // 过滤最后一个多的 & 符号。
                 ;
@@ -391,8 +391,8 @@ let global = this || {};
                     str += '&';
                 }
                 str += key + '=' + (isEncodeURIComponent
-                        ? encodeURIComponent(obj[key])
-                        : obj[key]);
+                    ? encodeURIComponent(obj[key])
+                    : obj[key]);
             }
             return str;
         },
@@ -1196,7 +1196,7 @@ let global = this || {};
                         str);
                 case 'date':    //日期时间
                     return /^(\d{4})\-(\d{2})\-(\d{2}) (\d{2})(?:\:\d{2}|:(\d{2}):(\d{2}))$/.test(
-                            str) || /^(\d{4})\-(\d{2})\-(\d{2})$/.test(str);
+                        str) || /^(\d{4})\-(\d{2})\-(\d{2})$/.test(str);
                 case 'number':  //数字
                     return /^[0-9]$/.test(str);
                 case 'positiveInteger':  //正整数
@@ -1224,6 +1224,13 @@ let global = this || {};
             return str.replace(/\b\w+\b/g, function(word) {
                 return word.substring(0, 1).toUpperCase() +
                     word.substring(1).toLowerCase();
+            });
+        },
+        //字符串首字母变大写
+        firstUpperCase(str) {
+            return str.replace(/\b\w+\b/g, function(word) {
+                return word.substring(0, 1).toUpperCase() +
+                    word.substring(1);
             });
         },
         //emoji判断
@@ -1446,7 +1453,7 @@ let global = this || {};
          * @return {String}
          */
         gid16: function() {
-            return this.gid().substr(8, 24);
+            return this.gid().substr(8, 16);
         },
 
         /**
@@ -1621,53 +1628,11 @@ let global = this || {};
         userAgent: u
     };
 
-    /**
-     * 函数工具
-     * */
-    var funUtil = {
-        /**
-         * 什么也不做
-         */
-        noop() {},
-    };
 
 
-    /**
-     * 正则工具
-     * */
-    var regUtil = {
 
-        /**
-         * email
-         */
-        isEmail (str) {
-            return (/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/.test(str))
-        },
-
-        /**
-         * 身份证
-         * */
-        isIdCard (str){
-            return /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/.test(str)
-        },
-
-
-        /**
-         * 手机号
-         * */
-        isPhoneNum : function isPhoneNum(str) {
-            return (/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(str)
-            );
-        },
-
-
-        /**
-         * url
-         * */
-        isUrl : function isUrl(str) {
-            return (/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2timeAddOrSub,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i.test(str)
-            );
-        }
+    var otherUtil ={
+        noop: function () {}
     };
 
     Utils.extend(Utils, paramUtil);
@@ -1679,8 +1644,7 @@ let global = this || {};
     Utils.extend(Utils, gidUtil);
     Utils.extend(Utils, colorUtil);
     Utils.extend(Utils, browserUtil);
-    Utils.extend(Utils, funUtil);
-    Utils.extend(Utils, regUtil);
+    Utils.extend(Utils, otherUtil);
 
     if (typeof module !== 'undefined' && module.exports) module.exports = Utils;
     if (typeof define === 'function') define(function() { return Utils; });

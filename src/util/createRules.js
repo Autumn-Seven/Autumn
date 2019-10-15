@@ -68,11 +68,11 @@ export const createRules = (customeRules = {} ,  OriginalRules = {}) => {
 
 
 
-/** * 
+/** *
  * 自己定义的规则：2种模式：
  *      1.名字相同的直接复制
  *      2.用正则表达式去匹配名字，如：len_20  对应  ---->  len_x
- * 
+ *
  * **/
 
 var RULES = {
@@ -236,4 +236,22 @@ var RULES = {
 };
 
 export default  RULES
+
+
+
+/**
+ *
+ * 用法： { validator: validate('ip'), trigger: 'blur' },
+ * */
+export function validate(name) {
+
+    let myRule = RULES[name];
+    return function(rule, value, callback) {
+        if (!myRule.pattern.test(value)) {
+            callback(new Error(myRule.message));
+        } else {
+            callback();
+        }
+    }
+}
 

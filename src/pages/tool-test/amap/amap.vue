@@ -5,10 +5,10 @@
 */
 <template>
     <div>
-        <div id="MapContainer">1234123</div>
+        ss
 
         <head-top signin-up='home'>
-            <span slot='logo' class="head_logo"  @click="reload">FoodMap</span>
+            <span slot='logo' class="head_logo"  >FoodMap</span>
         </head-top>
 <!--        <zoom></zoom>-->
 
