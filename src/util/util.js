@@ -1269,6 +1269,35 @@ let global = this || {};
                 }
             }
         },
+
+
+        /**
+         * 占位符替换工厂。
+         *
+         * @method
+         * @param {String} sContent 含占位符的字符串。
+         * 	当要被替换的内容中含未知替换数据，则会保留当前点位符。
+         * @param {Object} oData 要替换的点位符数据，依据对象的键名与点位符一一对应，功能类似 KISSY.substitute。
+         * @param {String} sUnValue 当值为空、null、NaN 等无效值时，使用该值来替代，如果该值也无效，则会继续使用原来的值。
+         * @return {String} 返回替换后的字符串。
+         */
+        substitute: function (sContent, oData, sUnValue) {
+            if (!oData) {
+                return sContent;
+            }
+
+            var sValue = '';
+            for (var p in oData) {
+                sValue = oData[p];
+                if (!sValue && sUnValue != undefined) {
+                    sValue = sUnValue;
+                }
+
+                sContent = sContent.replace(new RegExp('\\{' + p + '\\}', 'g'), sValue);
+            }
+
+            return sContent;
+        },
     };
     var arrayUtil = {
         // 数组操作。
