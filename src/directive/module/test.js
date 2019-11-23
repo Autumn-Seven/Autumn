@@ -42,8 +42,6 @@ export default {
         el.__v_forClass__ && el.__v_forClass__(el, binding, vnode);
     },
 	unbind(el, binding) {
-		// 解除事件监听
-		document.removeEventListener('click', el.__vueClickOutside__);
-		delete el.__vueClickOutside__;
+		delete el.__v_forClass__;
 	},
 }
