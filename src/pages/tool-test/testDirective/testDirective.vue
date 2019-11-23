@@ -7,10 +7,7 @@
 
 <template>
     <div>
-       <div v-for="item ,index in Arry" :key="index" v-test="{item,index,currentIndex}"
-            @mouseover="selectStyle(index)"
-            @mouseout="outStyle(index)"
-           >
+       <div v-for="item ,index in Arry" :key="index" v-forclass="{item,index,currentIndex,recover:true,}">
             {{item.name}}
        </div>
     </div>
@@ -49,7 +46,9 @@
 
 </script>
 <style>
-
+  .flex-item-active{
+    background-color: red;
+  }
 
 </style>
 
