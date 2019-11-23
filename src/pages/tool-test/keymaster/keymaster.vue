@@ -2,7 +2,7 @@
 * Created by Seven on 2019/5/23.
  * project: Autumn
  * email: fighting20xx@126.com
- */ 
+ */
 
 <template>
     <div class="msg">
@@ -71,6 +71,7 @@
                     if(key.ctrl) showMessage2('ctrl is pressed, OMGZ!');
                     if(key.alt) showMessage2('alt is pressed, OMGZ!');
                     if(key.enter) showMessage2('enter is pressed, OMGZ!');
+                    if(key.capital) showMessage2('enter is pressed, OMGZ!');
 
                     if(key.isPressed("M")) showMessage2('M key is pressed, can ya believe it!?');
                     if(key.isPressed("a")) showMessage2('a key is pressed, can ya believe it!?');
@@ -115,8 +116,8 @@
 
                 // unbind a key only for a single scope 解绑单个作用域。
                 // when no scope is specified it defaults to the current scope (key.getScope())
-                key.unbind('o, enter', 'issues');
-                key.unbind('o, enter', 'files');
+                // key.unbind('o, enter', 'issues');
+                // key.unbind('o, enter', 'files');
 
 
             },

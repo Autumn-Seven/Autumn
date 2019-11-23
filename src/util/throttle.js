@@ -89,3 +89,22 @@ export function throttle(fn, delay, debounce) {
 
     return cb;
 }
+
+
+/**
+ *
+ * 时间过滤器, 规定的间隔时间内只能执行一次
+ * @param {(Function)} fn
+ * @param {number} [delay=0] Unit: ms.
+ *
+ * */
+
+var lastExecTime = new Date().getTime();
+export  function timeFilter(fn, delay=100){
+    var currentTime = new  Date().getTime();
+
+    if(currentTime - lastExecTime > delay){
+        fn();
+        lastExecTime = currentTime;
+    }
+}

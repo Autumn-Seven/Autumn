@@ -75,6 +75,10 @@ export default [
                 path: 'amap',
                 component: () => import('@/pages/tool-test/amap/amap.vue'),
                 meta: {auth: false, title: '测试高德地图'},
+            },{
+                path: 'testDirective',
+                component: () => import('@/pages/tool-test/testDirective/testDirective.vue'),
+                meta: {auth: false, title: '自定义指令'},
             },
         ]
     },

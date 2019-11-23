@@ -134,20 +134,20 @@ var RULES = {
 
     /**  输入如：type_string, type_number
      *
-         string：必须是类型string。This is the default type.
-         number：必须是类型number。
-         boolean：必须是类型boolean。
-         method：必须是类型function。
-         regexp：必须是RegExp创建新项时不生成异常的实例或字符串RegExp。
-         integer：必须是类型number和整数。
-         float：必须是类型number和浮点数。
-         array：必须是由...确定的数组Array.isArray。
-         object：必须是类型object而不是Array.isArray。
-         enum：价值必须存在于enum。
-         date：值必须有效，由确定 Date
-         url：必须是类型url。
-         hex：必须是类型hex。
-         email：必须是类型email。
+     string：必须是类型string。This is the default type.
+     number：必须是类型number。
+     boolean：必须是类型boolean。
+     method：必须是类型function。
+     regexp：必须是RegExp创建新项时不生成异常的实例或字符串RegExp。
+     integer：必须是类型number和整数。
+     float：必须是类型number和浮点数。
+     array：必须是由...确定的数组Array.isArray。
+     object：必须是类型object而不是Array.isArray。
+     enum：价值必须存在于enum。
+     date：值必须有效，由确定 Date
+     url：必须是类型url。
+     hex：必须是类型hex。
+     email：必须是类型email。
      * */
     type_: {
         type:'type_',
@@ -205,6 +205,22 @@ var RULES = {
         pattern: /^((25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))$/,
         message: '只能输入IP地址'
     },
+    port: {
+        validator: function (rule, value, callback) {
+
+            if (!/^[0-9]+$/.test(value)) {
+                callback(new Error('只能输入数字'));
+            } else {
+                var v = parseInt(value);
+                if(v >65535){
+                    callback(new Error('端口号最大为65535'));
+                }else {
+                    callback();
+                }
+            }
+
+        }
+    },
     email: {
         pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
         message: '请输入正确的邮箱'
@@ -212,6 +228,72 @@ var RULES = {
     phone: {
         pattern: /^[1]([3-9])[0-9]{9}$/,
         message: '请输入11位手机号'
+    },
+
+    commonStr: {
+        validator: function (rule, value, callback) {
+            if (value && !/^[A-Za-z0-9_]+$/.test(value)) {
+                callback(new Error('只能输入数字,字母,_'));
+            } else if(typeof value === 'string' && value.length > 32){
+                callback(new Error('最大长度为32位'));
+            }else {
+                callback();
+            }
+        }
+    },
+    commonCNStr: {
+        validator: function (rule, value, callback) {
+            if (value && !/^[\u4E00-\u9FA5A-Za-z0-9_]+$/.test(value)) {
+                callback(new Error('只能输入中文,数字,字母,_'));
+            } else if(typeof value === 'string' && value.length > 32){
+                callback(new Error('最大长度为32位'));
+            }else {
+                callback();
+            }
+        }
+    },
+    commonNumber: {
+        validator: function (rule, value, callback) {
+            if(!(typeof value === 'number'  ||  /^[0-9]+$/.test(value))){
+                callback(new Error('必须数字类型'));
+            }else {
+                var v = parseInt(value);
+                if(v >20000 || v<0){
+                    callback(new Error('数字范围必须是 0 ~ 20000'));
+                }else {
+                    callback();
+                }
+            }
+        }
+    },
+    commonMinusNumber: {
+        validator: function (rule, value, callback) {
+            if(!(typeof value === 'number'  ||  /^(-)?[0-9]+$/.test(value))){
+                callback(new Error('必须数字类型'));
+            }else {
+                var v = parseInt(value);
+                if(v >20000 || v < -20000){
+                    callback(new Error('数字范围必须是 -20000 ~ 20000'));
+                }else {
+                    callback();
+                }
+            }
+        }
+    },
+    customNumber: function ([min = 0, max = 20000]) {
+        return  function (rule, value, callback) {
+            if(!(typeof value === 'number'  ||  /^(-)?[0-9]+$/.test(value))){
+                callback(new Error('必须数字类型'));
+            }else {
+                var v = parseInt(value);
+                if(v >max || v < min){
+                    callback(new Error('数字范围必须是 '+min+' ~ '+ max));
+                }else {
+                    callback();
+                }
+            }
+        }
+
     },
 
 
@@ -238,20 +320,22 @@ var RULES = {
 export default  RULES
 
 
-
 /**
  *
- * 用法： { validator: validate('ip'), trigger: 'blur' },
+ * 用法1： { validator: validate('ip'), trigger: 'blur' },
+ * 用法2： { validator: customNumber(1,50000), trigger: 'blur' },         //自定义传递参数
  * */
 export function validate(name) {
 
     let myRule = RULES[name];
+    if( typeof myRule === 'function') {return  myRule([...arguments].splice(1))}
+    if( myRule.validator) {return  myRule.validator}
+
     return function(rule, value, callback) {
-        if (!myRule.pattern.test(value)) {
+        if (value && !myRule.pattern.test(value)) {
             callback(new Error(myRule.message));
         } else {
             callback();
         }
     }
 }
-

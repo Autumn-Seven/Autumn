@@ -1,6 +1,7 @@
 // import draggable from './module/draggable'
 import clipboard from './module/clipboard'
 import formitemshow from './module/formitemshow'
+import test from './module/test'
 import permission, { checkPermission } from './module/permission'
 
 const directive = {
@@ -8,6 +9,7 @@ const directive = {
 	clipboard,
 	formitemshow,
 	permission,
+    test,
 };
 
 
@@ -42,9 +44,10 @@ const importDirective = Vue => {
 	Vue.directive('formitemshow', directive.formitemshow)
 
 
-	
+
 
 	Vue.directive('permission', directive.permission);
+	Vue.directive('test', directive.test);
 
 	Vue.prototype.$checkPermission = checkPermission // 挂在到全局，供动态渲染dom调用
 }
