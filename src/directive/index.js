@@ -2,6 +2,7 @@
 import clipboard from './module/clipboard'
 import formitemshow from './module/formitemshow'
 import test from './module/test'
+import forclass from './module/forclass.js'
 import permission, { checkPermission } from './module/permission'
 
 const directive = {
@@ -10,6 +11,7 @@ const directive = {
 	formitemshow,
 	permission,
     test,
+    forclass,
 };
 
 
@@ -48,6 +50,7 @@ const importDirective = Vue => {
 
 	Vue.directive('permission', directive.permission);
 	Vue.directive('test', directive.test);
+	Vue.directive('forclass', directive.forclass);
 
 	Vue.prototype.$checkPermission = checkPermission // 挂在到全局，供动态渲染dom调用
 }
