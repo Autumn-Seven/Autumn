@@ -5,12 +5,10 @@
 */
 <template>
     <div>
-        ss
-
-        <head-top signin-up='home'>
+        <head-top signin-up='home' class="MapContainer" id="MapContainer">
             <span slot='logo' class="head_logo"  >FoodMap</span>
         </head-top>
-<!--        <zoom></zoom>-->
+
 
     </div>
 </template>
@@ -81,7 +79,7 @@
                 var map = new this.AMap.Map('MapContainer', {
                     resizeEnable: true,
                     zoom:11,
-                    center: [116.397428, 39.90923]
+                    center: [120.06396960094571,30.308969408253525]
                 });
                 var self = this;
 
@@ -97,6 +95,30 @@
                         // self.getfood();
                     } ,
                     this.onError);
+
+
+
+                var marker = new this.AMap.Marker({
+                    position: new this.AMap.LngLat(120.06396960094571,30.308969408253525),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+                    title: '北京'
+                });
+
+// 将创建的点标记添加到已有的地图实例：
+                map.add(marker);
+
+                var content = [
+                    "<b>银江软件园F座2楼</b>",
+                    "<div>杭州市西湖区西园八路2号</div>"
+            ];
+
+// 创建 infoWindow 实例
+                var infoWindow = new this.AMap.InfoWindow({
+                    anchor: 'bottom-left',
+                    content: content.join("<br>")  //传入 dom 对象，或者 html 字符串
+                });
+
+// 打开信息窗体
+                infoWindow.open(map,[120.06419417037063,30.309185024687217]);
 
 
             },
