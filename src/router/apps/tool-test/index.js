@@ -79,6 +79,10 @@ export default [
                 path: 'testDirective',
                 component: () => import('@/pages/tool-test/testDirective/testDirective.vue'),
                 meta: {auth: false, title: '自定义指令'},
+            },{
+                path: 'Vue-Quill-Editor',
+                component: () => import('@/pages/tool-test/editor/Vue-Quill-Editor.vue'),
+                meta: {auth: false, title: '文本编辑器'},
             },
         ]
     },
